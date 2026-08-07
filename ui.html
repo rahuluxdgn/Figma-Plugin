@@ -43,34 +43,34 @@
 
     /* Dark theme — flip the tokens */
     .plugin.dark {
-      --bg:        #16161e;
-      --bg-2:      #1d1d27;
-      --text:      #f2f2f7;
-      --text-2:    #d8d8e0;
-      --muted:     #9a9aa5;
-      --muted-2:   #6b6b75;
-      --soft:      #25252e;
-      --line:      #2e2e38;
-      --line-2:    #3a3a45;
-      --accent:    #a78bfa;
-      --surface-card-from: #1f1f29;
-      --surface-card-to:   #1a1a23;
-      --surface-btn-from:  #2a2a35;
-      --surface-btn-to:    #1f1f29;
-      --surface-soft-from: #1c1c25;
-      --surface-soft-to:   #15151d;
-      --surface-soft-2-from: #25252e;
-      --surface-soft-2-to:   #1d1d27;
-      --rim-light:    rgba(255,255,255,.08);
-      --rim-light-2:  rgba(255,255,255,.04);
-      --rim-dark:     rgba(0,0,0,.35);
-      --rim-dark-2:   rgba(0,0,0,.55);
-      --inset-dark:   rgba(0,0,0,.45);
-      --inset-dark-2: rgba(0,0,0,.3);
-      --shadow-1: rgba(0,0,0,.5);
-      --shadow-2: rgba(0,0,0,.3);
-      --shadow-3: rgba(0,0,0,.4);
-      --shadow-4: rgba(0,0,0,.45);
+      --bg:        #0e0e16;
+      --bg-2:      #161622;
+      --text:      #f5f5fa;
+      --text-2:    #dadae3;
+      --muted:     #9090a0;
+      --muted-2:   #5e5e6e;
+      --soft:      #1e1e2c;
+      --line:      #25253a;
+      --line-2:    #34344e;
+      --accent:    #c4b5fd;
+      --surface-card-from: #20203a;
+      --surface-card-to:   #18182c;
+      --surface-btn-from:  #2a2a44;
+      --surface-btn-to:    #1c1c30;
+      --surface-soft-from: #1a1a2c;
+      --surface-soft-to:   #14142a;
+      --surface-soft-2-from: #25253a;
+      --surface-soft-2-to:   #1c1c30;
+      --rim-light:    rgba(255,255,255,.1);
+      --rim-light-2:  rgba(255,255,255,.06);
+      --rim-dark:     rgba(0,0,0,.5);
+      --rim-dark-2:   rgba(0,0,0,.7);
+      --inset-dark:   rgba(0,0,0,.55);
+      --inset-dark-2: rgba(0,0,0,.4);
+      --shadow-1: rgba(0,0,0,.6);
+      --shadow-2: rgba(0,0,0,.4);
+      --shadow-3: rgba(0,0,0,.5);
+      --shadow-4: rgba(0,0,0,.55);
     }
 
     /* Smooth transition for theme switching — applies on every element */
@@ -100,16 +100,21 @@
       margin: 0;
       height: 100%;
       max-height: 100%;
-      background: #e6e6eb;
+      background:
+        radial-gradient(ellipse at top left, rgba(196,181,253,.25), transparent 60%),
+        radial-gradient(ellipse at bottom right, rgba(124,58,237,.2), transparent 60%),
+        #16162a;
       border-radius: 0;
       padding: 4px;
       display: flex;
     }
     .plugin {
-      background: rgba(248, 248, 250, .78);
-      backdrop-filter: blur(24px) saturate(115%);
-      -webkit-backdrop-filter: blur(24px) saturate(115%);
-      border: 1px solid rgba(255,255,255,.9);
+      background: linear-gradient(180deg,
+        rgba(255,255,255,.92) 0%,
+        rgba(255,255,255,.78) 100%);
+      backdrop-filter: blur(28px) saturate(150%);
+      -webkit-backdrop-filter: blur(28px) saturate(150%);
+      border: 1px solid rgba(255,255,255,.7);
       border-radius: 16px;
       width: 100%;
       height: 100%;
@@ -117,18 +122,24 @@
       flex-direction: column;
       overflow: hidden;
       box-shadow:
-        inset 0 1px 0 rgba(255,255,255,.95),
-        inset 0 -1px 0 rgba(0,0,0,.08),
-        0 10px 24px rgba(30,30,40,.14),
-        0 2px 5px rgba(30,30,40,.1);
+        inset 0 1px 0 rgba(255,255,255,.9),
+        inset 0 -1px 0 rgba(0,0,0,.06),
+        0 20px 50px rgba(60,30,120,.18),
+        0 6px 16px rgba(60,30,120,.1);
     }
     .plugin.dark {
-      background: rgba(28, 29, 34, .82);
-      border-color: rgba(255,255,255,.12);
+      background: linear-gradient(180deg,
+        rgba(30,28,52,.88) 0%,
+        rgba(18,16,38,.82) 100%);
+      backdrop-filter: blur(28px) saturate(180%);
+      -webkit-backdrop-filter: blur(28px) saturate(180%);
+      border-color: rgba(196,181,253,.2);
       box-shadow:
-        inset 0 1px 0 rgba(255,255,255,.1),
+        inset 0 1px 0 rgba(255,255,255,.12),
         inset 0 -1px 0 rgba(0,0,0,.5),
-        0 12px 28px rgba(0,0,0,.45);
+        0 20px 60px rgba(0,0,0,.6),
+        0 0 1px rgba(196,181,253,.15),
+        0 0 30px rgba(124,58,237,.18);
     }
 
     /* Header */
@@ -331,14 +342,18 @@
         0 4px 14px rgba(60,30,120,.08);
     }
     .plugin.dark .card {
-      background: linear-gradient(180deg, rgba(30,30,40,.5) 0%, rgba(20,20,28,.35) 100%);
-      backdrop-filter: blur(16px) saturate(170%);
-      -webkit-backdrop-filter: blur(16px) saturate(170%);
-      border-color: rgba(255,255,255,.08);
+      background: linear-gradient(180deg,
+        rgba(48,42,82,.55) 0%,
+        rgba(32,28,60,.45) 100%);
+      backdrop-filter: blur(16px) saturate(180%);
+      -webkit-backdrop-filter: blur(16px) saturate(180%);
+      border-color: rgba(196,181,253,.18);
       box-shadow:
-        inset 0 1px 0 rgba(255,255,255,.06),
-        0 1px 2px rgba(0,0,0,.3),
-        0 4px 14px rgba(0,0,0,.3);
+        inset 0 1px 0 rgba(255,255,255,.1),
+        inset 0 -1px 0 rgba(0,0,0,.4),
+        0 1px 2px rgba(0,0,0,.4),
+        0 4px 14px rgba(124,58,237,.18),
+        0 0 1px rgba(196,181,253,.1);
     }
     .card-head {
       display: flex; align-items: center; gap: 10px;
@@ -645,11 +660,17 @@
     }
     .plugin.dark .selection-hero {
       background:
-        linear-gradient(180deg, rgba(40,40,52,.7) 0%, rgba(30,30,40,.55) 100%),
-        linear-gradient(135deg, rgba(124,58,237,.15) 0%, rgba(236,72,153,.1) 50%, rgba(59,130,246,.1) 100%);
-      backdrop-filter: blur(18px) saturate(140%);
-      -webkit-backdrop-filter: blur(18px) saturate(140%);
-      border-color: rgba(124, 58, 237, .25);
+        linear-gradient(180deg, rgba(48,42,82,.6) 0%, rgba(32,28,60,.5) 100%),
+        linear-gradient(135deg, rgba(124,58,237,.25) 0%, rgba(236,72,153,.18) 50%, rgba(59,130,246,.18) 100%);
+      backdrop-filter: blur(20px) saturate(200%);
+      -webkit-backdrop-filter: blur(20px) saturate(200%);
+      border-color: rgba(196,181,253,.3);
+      box-shadow:
+        inset 0 1px 0 rgba(255,255,255,.12),
+        inset 0 -1px 0 rgba(0,0,0,.3),
+        0 4px 14px rgba(124,58,237,.25),
+        0 12px 32px rgba(124,58,237,.2),
+        0 0 1px rgba(196,181,253,.15);
     }
     .main { position: relative; }
     .selection-hero { margin-bottom: 38px; }
@@ -790,16 +811,42 @@
     /* Section header — clean hierarchy between Selection and Groups */
     .section-head {
       display: flex; align-items: center; justify-content: space-between;
-      padding: 2px 4px 0;
+      gap: 10px;
+      padding: 4px 6px 2px;
+      flex: none;
     }
-    .section-title { display: flex; align-items: baseline; gap: 8px; }
-    .title-main { font-size: 13px; font-weight: 700; color: var(--text); }
-    .title-meta { font-size: 10.5px; color: var(--muted); font-weight: 500; }
+    .section-title {
+      display: flex; align-items: center; gap: 7px;
+      min-width: 0;
+      flex: 1;
+    }
+    .title-main {
+      font-size: 13px; font-weight: 700;
+      color: var(--text);
+      white-space: nowrap;
+      overflow: hidden; text-overflow: ellipsis;
+    }
+    .title-meta {
+      font-size: 10px; color: var(--muted); font-weight: 600;
+      background: var(--soft);
+      padding: 2px 7px;
+      border-radius: 999px;
+      white-space: nowrap;
+      flex: none;
+      box-shadow: inset 0 1px 0 var(--rim-light);
+    }
+    .plugin.dark .title-meta {
+      background: rgba(40,40,52,.55);
+      box-shadow: inset 0 1px 0 rgba(255,255,255,.06);
+    }
     .section-stat {
       display: inline-flex; align-items: center; gap: 5px;
-      padding: 3px 8px; border-radius: 999px;
-      background: var(--soft); font-size: 10.5px; font-weight: 600;
+      padding: 4px 10px; border-radius: 999px;
+      background: var(--soft);
+      font-size: 10.5px; font-weight: 600;
       color: var(--text);
+      white-space: nowrap;
+      flex: none;
       box-shadow: inset 0 1px 0 var(--rim-light);
     }
     .plugin.dark .section-stat {
@@ -809,7 +856,9 @@
     .stat-dot {
       width: 6px; height: 6px; border-radius: 3px;
       background: linear-gradient(135deg, #7c3aed, #ec4899);
+      flex: none;
     }
+    .stat-text { color: var(--text); }
 
     .main.is-scrolled .section-head {
       position: sticky;
@@ -825,6 +874,22 @@
       transition: padding .35s cubic-bezier(.22,1,.36,1), background .35s ease, box-shadow .35s ease;
     }
 
+
+    .selection-hero { margin-bottom: 0; }
+    .selection-hero + .section-head { width: auto; max-width: 58%; }
+    .main.is-scrolled .section-head {
+      position: absolute;
+      top: 18px;
+      right: 14px;
+      margin-top: 0;
+      padding: 0;
+      width: auto;
+      max-width: 58%;
+      background: transparent;
+      backdrop-filter: none;
+      -webkit-backdrop-filter: none;
+      box-shadow: none;
+    }
 
     .footer {
       flex: none;
@@ -971,11 +1036,11 @@
         <div class="section-head">
           <div class="section-title">
             <span class="title-main">Groups</span>
-            <span class="title-meta" id="groupCountLabel">0 groups</span>
+            <span class="title-meta" id="groupCountLabel">0</span>
           </div>
           <div class="section-stat">
             <span class="stat-dot"></span>
-            <span id="modeCountLabel">0 modes total</span>
+            <span class="stat-text" id="modeCountLabel">0 modes total</span>
           </div>
         </div>
 
@@ -1177,7 +1242,7 @@
       groups.forEach((g,i) => cardsEl.appendChild(renderCard(g,i)));
 
       const totalModes = groups.reduce((sum,g) => sum + g.modes.length, 0);
-      groupCountLabel.textContent = `${groups.length} group${groups.length === 1 ? '' : 's'}`;
+      groupCountLabel.textContent = String(groups.length);
       modeCountLabel.textContent = `${totalModes} mode${totalModes === 1 ? '' : 's'} total`;
 
       const addAvailable = availableCollections().length > 0;
