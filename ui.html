@@ -73,42 +73,18 @@
       --shadow-4: rgba(0,0,0,.45);
     }
 
-    /* Smooth transition for theme switching */
-    .theme-switching,
-    .theme-switching * {
+    /* Smooth transition for theme switching — applies on every element */
+    .plugin,
+    .plugin * {
       transition:
-        background-color 0.65s cubic-bezier(0.65, 0, 0.35, 1),
-        background 0.65s cubic-bezier(0.65, 0, 0.35, 1),
-        color 0.65s cubic-bezier(0.65, 0, 0.35, 1),
-        border-color 0.65s cubic-bezier(0.65, 0, 0.35, 1),
-        box-shadow 0.65s cubic-bezier(0.65, 0, 0.35, 1),
-        fill 0.65s cubic-bezier(0.65, 0, 0.35, 1),
-        stroke 0.65s cubic-bezier(0.65, 0, 0.35, 1) !important;
+        background-color 1s ease,
+        background 1s ease,
+        color 1s ease,
+        border-color 1s ease,
+        box-shadow 1s ease,
+        fill 1s ease,
+        stroke 1s ease;
     }
-
-    /* Burn overlay — a circular sweep that radiates from the toggle button */
-    .burn {
-      position: fixed; inset: 0;
-      pointer-events: none; z-index: 9999;
-      overflow: hidden;
-    }
-    .burn::before {
-      content: '';
-      position: absolute;
-      top: var(--bx, 50%);
-      left: var(--by, 50%);
-      width: 0; height: 0;
-      border-radius: 50%;
-      background: var(--burn-color, #7c3aed);
-      transform: translate(-50%, -50%);
-      transition: width .85s cubic-bezier(0.7, 0, 0.35, 1),
-                  height .85s cubic-bezier(0.7, 0, 0.35, 1),
-                  opacity .85s ease;
-      box-shadow: 0 0 60px 30px var(--burn-color, #7c3aed);
-      opacity: .9;
-    }
-    .burn.fade::before { opacity: 0; }
-    .burn.active::before { width: 320vmax; height: 320vmax; opacity: .95; }
     * { box-sizing: border-box; }
     html, body { margin: 0; padding: 0; width: 100%; height: 100%; }
     body {
@@ -563,7 +539,7 @@
         0 4px 10px var(--shadow-3),
         0 12px 28px var(--shadow-4);
       overflow: hidden;
-      transition: all .25s ease;
+      transition: min-height .42s cubic-bezier(.22,1,.36,1), padding .42s cubic-bezier(.22,1,.36,1), gap .42s cubic-bezier(.22,1,.36,1), border-radius .42s cubic-bezier(.22,1,.36,1), box-shadow .42s ease, background .3s ease;
     }
     .plugin.dark .selection-hero {
       background:
@@ -595,6 +571,7 @@
       border-radius: 14px;
       background: linear-gradient(180deg, var(--surface-btn-from) 0%, #f3effa 100%);
       display: grid; place-items: center;
+      transition: width .42s cubic-bezier(.22,1,.36,1), height .42s cubic-bezier(.22,1,.36,1), border-radius .42s cubic-bezier(.22,1,.36,1), box-shadow .35s ease;
       box-shadow:
         inset 0 1px 0 var(--rim-light),
         inset 0 -1px 0 rgba(124,58,237,.12),
@@ -641,7 +618,19 @@
     }
     .selection-hero.is-scrolled .selection-eyebrow,
     .selection-hero.is-scrolled .selection-sub {
-      display: none;
+      opacity: 0;
+      max-height: 0;
+      margin-top: 0;
+      margin-bottom: 0;
+      transform: translateY(-4px);
+      pointer-events: none;
+    }
+    .selection-hero .selection-eyebrow,
+    .selection-hero .selection-sub {
+      opacity: 1;
+      max-height: 30px;
+      overflow: hidden;
+      transition: opacity .28s ease, max-height .42s cubic-bezier(.22,1,.36,1), transform .42s cubic-bezier(.22,1,.36,1), margin .42s ease;
     }
     .selection-hero.is-scrolled .selection-count {
       line-height: 1;
@@ -801,8 +790,6 @@
         <button class="close" id="close" title="Close">×</button>
       </div>
     </div>
-
-    <div class="burn" id="burn" aria-hidden="true"></div>
 
     <div class="body">
       <aside class="sidebar">
@@ -1102,9 +1089,8 @@
 
     $('close').onclick = () => parent.postMessage({pluginMessage:{type:'cancel'}}, '*');
 
-    // ─── Theme toggle with burn animation ──────────────────────────
+    // ─── Theme toggle — clean slow cross-fade ──────────────────────
     const pluginEl = document.querySelector('.plugin');
-    const burnEl = document.getElementById('burn');
     const themeToggleBtn = document.getElementById('themeToggle');
 
     // Restore saved preference (defaults to light)
@@ -1113,38 +1099,10 @@
       if (saved === 'dark') pluginEl.classList.add('dark');
     } catch (_) { /* localStorage may be blocked */ }
 
-    themeToggleBtn.onclick = (e) => {
-      const rect = themeToggleBtn.getBoundingClientRect();
-      const isDark = pluginEl.classList.contains('dark');
-      const nextIsDark = !isDark;
-
-      // Set burn origin to the toggle button's center
-      const bx = rect.left + rect.width / 2;
-      const by = rect.top + rect.height / 2;
-      burnEl.style.setProperty('--bx', bx + 'px');
-      burnEl.style.setProperty('--by', by + 'px');
-      burnEl.style.setProperty('--burn-color', nextIsDark ? '#16161e' : '#ff5db1');
-
-      // Trigger the burn-out animation first
-      burnEl.classList.remove('fade');
-      burnEl.classList.add('active');
-
-      // Halfway through the burn, swap the theme — colors transition underneath
-      setTimeout(() => {
-        pluginEl.classList.add('theme-switching');
-        pluginEl.classList.toggle('dark', nextIsDark);
-        try { localStorage.setItem('theme-compare-theme', nextIsDark ? 'dark' : 'light'); } catch (_) {}
-      }, 220);
-
-      // Fade the burn out and clean up
-      setTimeout(() => {
-        burnEl.classList.add('fade');
-      }, 900);
-
-      setTimeout(() => {
-        burnEl.classList.remove('active', 'fade');
-        pluginEl.classList.remove('theme-switching');
-      }, 1500);
+    themeToggleBtn.onclick = () => {
+      const nextIsDark = !pluginEl.classList.contains('dark');
+      pluginEl.classList.toggle('dark', nextIsDark);
+      try { localStorage.setItem('theme-compare-theme', nextIsDark ? 'dark' : 'light'); } catch (_) {}
     };
 
     // Sidebar nav (visual switching)
