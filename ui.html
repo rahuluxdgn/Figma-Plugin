@@ -683,7 +683,7 @@
       -webkit-backdrop-filter: blur(18px) saturate(140%);
       border-color: rgba(124, 58, 237, .25);
     }
-    .selection-hero + .section-head { margin-top: -9px; }
+    .selection-hero + .section-head { margin-top: 6px; }
 
     .selection-hero.has-selection {
       background:
@@ -896,12 +896,25 @@
         0 1px 2px rgba(124,58,237,.3);
     }
     .cta:disabled {
-      background: linear-gradient(180deg, var(--surface-soft-2-from) 0%, var(--surface-soft-2-to) 100%);
+      background: linear-gradient(180deg, rgba(255,255,255,.45) 0%, rgba(255,255,255,.28) 100%);
+      backdrop-filter: blur(8px) saturate(150%);
+      -webkit-backdrop-filter: blur(8px) saturate(150%);
+      border: 1px solid rgba(255,255,255,.5);
       color: var(--muted);
       box-shadow:
-        inset 0 1px 0 var(--rim-light-2),
-        inset 0 -1px 0 var(--inset-dark);
+        inset 0 1px 0 rgba(255,255,255,.5),
+        0 1px 2px rgba(60,30,120,.06);
       text-shadow: none;
+      cursor: not-allowed;
+    }
+    .plugin.dark .cta:disabled {
+      background: linear-gradient(180deg, rgba(255,255,255,.06) 0%, rgba(255,255,255,.02) 100%);
+      backdrop-filter: blur(8px) saturate(140%);
+      -webkit-backdrop-filter: blur(8px) saturate(140%);
+      border-color: rgba(255,255,255,.1);
+      box-shadow:
+        inset 0 1px 0 rgba(255,255,255,.06),
+        0 1px 2px rgba(0,0,0,.3);
     }
     .cta svg { width: 13px; height: 13px; }
 
