@@ -59,20 +59,37 @@
     }
     .logo { display: flex; align-items: center; gap: 9px; }
     .logo-mark {
-      width: 30px; height: 30px; border-radius: 8px;
+      width: 30px; height: 30px; border-radius: 9px;
       background: linear-gradient(135deg, #ff5db1 0%, #7c3aed 100%);
       display: grid; place-items: center; color: white;
-      box-shadow: 0 3px 8px rgba(124,58,237,.3);
+      box-shadow:
+        inset 0 1px 0 rgba(255,255,255,.45),
+        inset 0 -1px 0 rgba(0,0,0,.18),
+        0 2px 4px rgba(124,58,237,.25),
+        0 6px 14px rgba(124,58,237,.28);
     }
     .logo-mark svg { width: 16px; height: 16px; }
     .logo-title { font-size: 15px; font-weight: 700; letter-spacing: -.01em; }
     .close {
       width: 28px; height: 28px; border-radius: 14px;
-      background: var(--soft); border: 0; color: var(--muted);
+      background: linear-gradient(180deg, #ffffff 0%, #f1f1f4 100%);
+      border: 1px solid rgba(0,0,0,.06);
+      color: var(--muted);
       cursor: pointer; display: grid; place-items: center;
       font-size: 14px; line-height: 1;
+      box-shadow:
+        inset 0 1px 0 rgba(255,255,255,.9),
+        0 1px 2px rgba(0,0,0,.06),
+        0 2px 4px rgba(0,0,0,.04);
+      transition: all .15s ease;
     }
-    .close:hover { background: var(--line); color: var(--text); }
+    .close:hover { background: linear-gradient(180deg, #f6f6f8 0%, #ebebef 100%); color: var(--text); }
+    .close:active {
+      box-shadow:
+        inset 0 1px 2px rgba(0,0,0,.08),
+        0 1px 0 rgba(255,255,255,.6);
+      transform: translateY(0.5px);
+    }
 
     /* Body layout */
     .body { display: flex; flex: 1; min-height: 0; overflow: hidden; }
@@ -89,10 +106,23 @@
       font-size: 12px; font-weight: 500; color: var(--muted);
       border: 0; background: transparent; text-align: left;
       width: 100%;
+      transition: all .15s ease;
     }
-    .nav:hover { background: var(--soft); }
+    .nav:hover {
+      background: linear-gradient(180deg, #ffffff 0%, #f3f3f6 100%);
+      box-shadow:
+        inset 0 1px 0 rgba(255,255,255,.9),
+        0 1px 2px rgba(0,0,0,.04);
+      color: var(--text);
+    }
     .nav.active {
-      background: var(--text); color: white; font-weight: 600;
+      background: linear-gradient(180deg, #2a2a35 0%, #12121a 100%);
+      color: white; font-weight: 600;
+      box-shadow:
+        inset 0 1px 0 rgba(255,255,255,.18),
+        inset 0 -1px 0 rgba(0,0,0,.5),
+        0 2px 4px rgba(0,0,0,.18),
+        0 6px 14px rgba(0,0,0,.12);
     }
 
     /* Main content wrapper (column with scrollable main + fixed footer) */
@@ -101,7 +131,7 @@
       display: flex; flex-direction: column;
     }
     .main {
-      flex: 1; min-width: 0; padding: 14px 12px 8px 2px;
+      flex: 1; min-width: 0; padding: 0 12px 8px 2px;
       display: flex; flex-direction: column; gap: 9px;
       overflow-y: auto;
       min-height: 0;
@@ -114,66 +144,221 @@
     /* Cards */
     .cards { display: flex; flex-direction: column; gap: 10px; }
     .card {
-      background: white; border: 1px solid var(--line); border-radius: 12px;
+      background: linear-gradient(180deg, #ffffff 0%, #fbfbfd 100%);
+      border: 1px solid rgba(0,0,0,.06);
+      border-radius: 12px;
       padding: 9px 11px; display: flex; flex-direction: column; gap: 7px;
-      box-shadow: 0 1px 2px rgba(0,0,0,.04);
+      box-shadow:
+        inset 0 1px 0 rgba(255,255,255,.9),
+        0 1px 2px rgba(0,0,0,.05),
+        0 2px 6px rgba(0,0,0,.04),
+        0 8px 18px rgba(18,18,26,.04);
     }
     .card-head {
       display: flex; align-items: center; gap: 10px;
     }
     .checkbox {
       width: 18px; height: 18px; border-radius: 5px; flex: none;
-      background: var(--accent); display: grid; place-items: center;
+      background: linear-gradient(180deg, #8b5cf6 0%, #6d28d9 100%);
+      display: grid; place-items: center;
       color: white; cursor: pointer;
+      box-shadow:
+        inset 0 1px 0 rgba(255,255,255,.35),
+        inset 0 -1px 0 rgba(0,0,0,.25),
+        0 1px 2px rgba(124,58,237,.4);
     }
     .checkbox.unchecked {
-      background: white; border: 1.5px solid var(--line-2);
+      background: linear-gradient(180deg, #ffffff 0%, #f1f1f4 100%);
+      border: 1px solid var(--line-2);
+      box-shadow:
+        inset 0 1px 2px rgba(0,0,0,.06),
+        inset 0 -1px 0 rgba(255,255,255,.8);
     }
     .checkbox svg { width: 11px; height: 11px; }
     .card-label { flex: 1; font-weight: 600; font-size: 13px; }
     .card-count {
       padding: 3px 8px; border-radius: 6px;
-      background: var(--soft); color: var(--muted);
-      font-size: 11px; font-weight: 500;
+      background: linear-gradient(180deg, #f1f1f4 0%, #ebebef 100%);
+      color: var(--muted);
+      font-size: 11px; font-weight: 600;
+      box-shadow:
+        inset 0 1px 0 rgba(255,255,255,.8),
+        inset 0 -1px 0 rgba(0,0,0,.04);
     }
     .card-remove {
       width: 22px; height: 22px; border-radius: 6px;
       background: transparent; border: 0; color: var(--muted);
       cursor: pointer; display: grid; place-items: center;
       font-size: 14px; line-height: 1;
+      transition: all .15s ease;
     }
-    .card-remove:hover { background: var(--soft); color: #ef4444; }
+    .card-remove:hover {
+      background: linear-gradient(180deg, #fff5f5 0%, #ffe8e8 100%);
+      color: #ef4444;
+      box-shadow: inset 0 1px 0 rgba(255,255,255,.8);
+    }
 
     .collection-pick {
-      width: 100%; border: 1px solid var(--line); border-radius: 9px;
-      padding: 6px 9px; background: #fafafb;
+      width: 100%; border: 1px solid rgba(0,0,0,.08); border-radius: 9px;
+      padding: 6px 36px 6px 9px;
+      appearance: none;
+      -webkit-appearance: none;
+      -moz-appearance: none;
+      background:
+        url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 12 12' fill='none'><path d='M3 4.5 L6 7.5 L9 4.5' stroke='%236b6b72' stroke-width='1.5' stroke-linecap='round' stroke-linejoin='round'/></svg>")
+        no-repeat right 14px center,
+        linear-gradient(180deg, #fafafb 0%, #f4f4f7 100%);
       font-family: inherit; font-size: 11.5px; color: var(--text);
+      box-shadow:
+        inset 0 1px 2px rgba(0,0,0,.06),
+        inset 0 -1px 0 rgba(255,255,255,.8);
+      transition: all .15s ease;
+      cursor: pointer;
     }
-    .collection-pick:focus { outline: 2px solid var(--accent); outline-offset: -1px; }
+    .collection-pick:focus {
+      outline: none;
+      background: white;
+      box-shadow:
+        inset 0 1px 2px rgba(0,0,0,.04),
+        0 0 0 2px rgba(124,58,237,.25);
+    }
+
+    /* Custom dropdown — replaces the native <select> for visual consistency */
+    .dd { position: relative; width: 100%; }
+    .dd-trigger {
+      width: 100%;
+      display: flex; align-items: center; justify-content: space-between;
+      gap: 10px;
+      padding: 7px 12px 7px 11px;
+      border: 1px solid rgba(0,0,0,.08);
+      border-radius: 9px;
+      background: linear-gradient(180deg, #fafafb 0%, #f4f4f7 100%);
+      font-family: inherit; font-size: 11.5px; color: var(--text);
+      cursor: pointer;
+      box-shadow:
+        inset 0 1px 2px rgba(0,0,0,.06),
+        inset 0 -1px 0 rgba(255,255,255,.8);
+      transition: all .15s ease;
+      text-align: left;
+    }
+    .dd-trigger:hover {
+      background: linear-gradient(180deg, #ffffff 0%, #f7f7fa 100%);
+      border-color: rgba(0,0,0,.12);
+    }
+    .dd-trigger.open {
+      background: white;
+      box-shadow:
+        inset 0 1px 2px rgba(0,0,0,.04),
+        0 0 0 2px rgba(124,58,237,.22);
+      border-color: rgba(124,58,237,.35);
+    }
+    .dd-trigger .dd-label { flex: 1; min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+    .dd-trigger .dd-chevron {
+      width: 12px; height: 12px; flex: none;
+      color: var(--muted);
+      transition: transform .15s ease;
+    }
+    .dd-trigger.open .dd-chevron { transform: rotate(180deg); color: var(--accent); }
+
+    .dd-menu {
+      position: absolute;
+      top: calc(100% + 4px);
+      left: 0; right: 0;
+      z-index: 50;
+      background: white;
+      border: 1px solid rgba(0,0,0,.08);
+      border-radius: 10px;
+      padding: 4px;
+      box-shadow:
+        inset 0 1px 0 rgba(255,255,255,.9),
+        0 4px 10px rgba(0,0,0,.08),
+        0 12px 28px rgba(0,0,0,.12);
+      max-height: 200px; overflow-y: auto;
+      opacity: 0; transform: translateY(-4px); pointer-events: none;
+      transition: opacity .15s ease, transform .15s ease;
+    }
+    .dd-menu.open {
+      opacity: 1; transform: translateY(0); pointer-events: auto;
+    }
+    .dd-menu::-webkit-scrollbar { width: 5px; }
+    .dd-menu::-webkit-scrollbar-thumb { background: var(--line-2); border-radius: 3px; }
+    .dd-option {
+      display: flex; align-items: center; gap: 8px;
+      width: 100%;
+      padding: 7px 10px;
+      border: 0; background: transparent;
+      border-radius: 7px;
+      cursor: pointer;
+      font-family: inherit; font-size: 11.5px;
+      color: var(--text); text-align: left;
+      transition: background .12s ease;
+    }
+    .dd-option:hover {
+      background: linear-gradient(180deg, #faf7ff 0%, #f1ecff 100%);
+      color: var(--accent);
+    }
+    .dd-option.active {
+      background: linear-gradient(180deg, #ede4ff 0%, #ddd0ff 100%);
+      color: var(--accent); font-weight: 600;
+      box-shadow:
+        inset 0 1px 0 rgba(255,255,255,.6),
+        inset 0 -1px 0 rgba(124,58,237,.12);
+    }
+    .dd-option .check {
+      width: 12px; height: 12px; flex: none;
+      color: var(--accent); opacity: 0;
+    }
+    .dd-option.active .check { opacity: 1; }
+    .dd-option.disabled {
+      color: var(--muted); cursor: not-allowed; opacity: .55;
+    }
+    .dd-option.disabled:hover { background: transparent; color: var(--muted); }
+    .dd-empty {
+      padding: 12px; text-align: center; font-size: 11px;
+      color: var(--muted);
+    }
 
     .modes {
       display: flex; flex-wrap: wrap; gap: 6px;
     }
     .mode-pill {
       display: inline-flex; align-items: center; gap: 5px;
-      padding: 4px 8px 4px 8px; border-radius: 999px;
-      background: linear-gradient(135deg, rgba(124,58,237,.08), rgba(255,93,177,.08));
-      border: 1px solid rgba(124,58,237,.2);
+      padding: 4px 4px 4px 9px; border-radius: 999px;
+      background: linear-gradient(180deg, rgba(255,255,255,.95) 0%, rgba(245,240,255,.9) 100%);
+      border: 1px solid rgba(124,58,237,.25);
       font-size: 10.5px; font-weight: 600; color: var(--accent);
+      box-shadow:
+        inset 0 1px 0 rgba(255,255,255,.9),
+        0 1px 2px rgba(124,58,237,.12);
     }
     .mode-pill .x {
       width: 14px; height: 14px; border-radius: 7px;
-      background: rgba(124,58,237,.18); display: grid; place-items: center;
+      background: linear-gradient(180deg, rgba(124,58,237,.18) 0%, rgba(124,58,237,.28) 100%);
+      display: grid; place-items: center;
       cursor: pointer; color: var(--accent);
+      box-shadow: inset 0 1px 0 rgba(255,255,255,.3);
+      transition: all .15s ease;
     }
-    .mode-pill .x:hover { background: rgba(124,58,237,.3); color: white; }
+    .mode-pill .x:hover {
+      background: linear-gradient(180deg, #8b5cf6 0%, #6d28d9 100%);
+      color: white;
+      box-shadow:
+        inset 0 1px 0 rgba(255,255,255,.25),
+        0 1px 2px rgba(124,58,237,.4);
+    }
     .add-pill {
       padding: 5px 10px; border-radius: 999px;
-      background: white; border: 1px dashed var(--line-2);
+      background: linear-gradient(180deg, #ffffff 0%, #f6f6f8 100%);
+      border: 1px dashed var(--line-2);
       color: var(--muted); cursor: pointer; font-size: 11px;
       font-weight: 500; font-family: inherit;
+      box-shadow: inset 0 1px 0 rgba(255,255,255,.9);
+      transition: all .15s ease;
     }
-    .add-pill:hover:not(:disabled) { color: var(--text); border-color: var(--muted); }
+    .add-pill:hover:not(:disabled) {
+      color: var(--text); border-color: var(--muted);
+      background: linear-gradient(180deg, #fbfbfd 0%, #f1f1f4 100%);
+    }
     .add-pill:disabled { opacity: .5; cursor: default; }
 
     .swatches {
@@ -182,23 +367,37 @@
     }
     .swatch {
       flex: 1; height: 22px; border-radius: 5px;
-      background: linear-gradient(135deg, rgba(124,58,237,.18), rgba(124,58,237,.06));
-      border: 1px solid var(--line);
+      background: linear-gradient(180deg, rgba(124,58,237,.22) 0%, rgba(124,58,237,.08) 100%);
+      border: 1px solid rgba(124,58,237,.18);
       display: flex; align-items: center; justify-content: center;
       font-size: 8.5px; color: var(--muted); font-weight: 600;
       overflow: hidden; white-space: nowrap;
       padding: 0 3px;
+      box-shadow:
+        inset 0 1px 0 rgba(255,255,255,.5),
+        inset 0 -1px 0 rgba(0,0,0,.04);
     }
-    .swatch.disabled { opacity: .35; }
+    .swatch.disabled {
+      background: linear-gradient(180deg, #f6f6f8 0%, #ebebef 100%);
+      border-color: var(--line);
+      color: var(--muted);
+      box-shadow:
+        inset 0 1px 2px rgba(0,0,0,.04),
+        inset 0 -1px 0 rgba(255,255,255,.8);
+    }
 
     .add-card {
-      width: 100%; border: 1px dashed var(--line-2);
-      background: transparent; color: var(--muted); border-radius: 12px;
+      width: 100%; border: 1px dashed rgba(0,0,0,.12);
+      background: linear-gradient(180deg, #fbfbfd 0%, #f4f4f7 100%);
+      color: var(--muted); border-radius: 12px;
       padding: 9px; cursor: pointer; font-size: 11px;
       font-weight: 500; font-family: inherit;
+      box-shadow: inset 0 1px 0 rgba(255,255,255,.9);
+      transition: all .15s ease;
     }
     .add-card:hover:not(:disabled) {
       color: var(--text); border-color: var(--muted);
+      background: linear-gradient(180deg, #ffffff 0%, #f1f1f4 100%);
     }
     .add-card:disabled { opacity: .5; cursor: default; }
 
@@ -226,31 +425,47 @@
       padding: 12px 14px;
       margin-top: 0; margin-bottom: 2px;
       border-radius: 14px;
-      background: linear-gradient(135deg, #faf7ff 0%, #f4f0ff 50%, #eef4ff 100%);
+      background:
+        linear-gradient(180deg, rgba(255,255,255,.9) 0%, rgba(250,247,255,.6) 100%),
+        linear-gradient(135deg, #faf7ff 0%, #f4f0ff 50%, #eef4ff 100%);
       border: 1px solid rgba(124, 58, 237, .12);
-      box-shadow: 0 8px 16px rgba(18,18,26,.08);
+      box-shadow:
+        inset 0 1px 0 rgba(255,255,255,.9),
+        0 1px 2px rgba(0,0,0,.04),
+        0 4px 10px rgba(18,18,26,.05),
+        0 12px 28px rgba(18,18,26,.06);
       overflow: hidden;
       transition: all .25s ease;
     }
     .selection-hero.has-selection {
-      background: linear-gradient(135deg, #7c3aed 0%, #a855f7 60%, #ec4899 100%);
+      background:
+        linear-gradient(180deg, rgba(255,255,255,.25) 0%, rgba(255,255,255,0) 50%),
+        linear-gradient(135deg, #7c3aed 0%, #a855f7 60%, #ec4899 100%);
       border-color: transparent;
-      box-shadow: 0 8px 24px rgba(124, 58, 237, .35);
+      box-shadow:
+        inset 0 1px 0 rgba(255,255,255,.4),
+        inset 0 -1px 0 rgba(0,0,0,.12),
+        0 2px 6px rgba(124,58,237,.25),
+        0 12px 28px rgba(124,58,237,.35);
     }
     .selection-hero.has-selection .selection-eyebrow,
     .selection-hero.has-selection .selection-sub { color: rgba(255,255,255,.85); }
     .selection-hero.has-selection .count-num,
     .selection-hero.has-selection .count-lbl { color: white; }
+    .selection-hero.has-selection .count-num { text-shadow: 0 1px 2px rgba(0,0,0,.18); }
 
     .selection-orb {
       position: relative;
       width: 48px; height: 48px;
       flex: none;
       border-radius: 14px;
-      background: white;
+      background: linear-gradient(180deg, #ffffff 0%, #f3effa 100%);
       display: grid; place-items: center;
-      box-shadow: 0 4px 12px rgba(124, 58, 237, .25),
-                  inset 0 0 0 1px rgba(124, 58, 237, .1);
+      box-shadow:
+        inset 0 1px 0 rgba(255,255,255,.9),
+        inset 0 -1px 0 rgba(124,58,237,.12),
+        0 1px 2px rgba(124,58,237,.18),
+        0 4px 10px rgba(124,58,237,.22);
     }
     .selection-orb .orb-icon {
       position: relative; z-index: 2;
@@ -339,15 +554,46 @@
     }
     .cta {
       width: 100%; border: 0; border-radius: 12px;
-      padding: 10px 14px; color: white; cursor: pointer;
+      padding: 11px 14px; color: white; cursor: pointer;
       font-weight: 700; font-size: 12.5px; font-family: inherit;
       display: flex; align-items: center; justify-content: center; gap: 7px;
-      background: linear-gradient(135deg, #5b21b6 0%, #8b5cf6 100%);
-      box-shadow: 0 6px 18px rgba(124,58,237,.4),
-                  0 2px 6px rgba(124,58,237,.25);
+      background: linear-gradient(180deg, #a78bfa 0%, #7c3aed 50%, #6d28d9 100%);
+      box-shadow:
+        inset 0 1px 0 rgba(255,255,255,.4),
+        inset 0 -1px 0 rgba(0,0,0,.25),
+        inset 0 -2px 4px rgba(0,0,0,.12),
+        0 1px 2px rgba(0,0,0,.15),
+        0 4px 10px rgba(124,58,237,.35),
+        0 10px 24px rgba(124,58,237,.3);
+      transition: all .15s ease;
+      text-shadow: 0 1px 1px rgba(0,0,0,.18);
     }
-    .cta:hover:not(:disabled) { transform: translateY(-1px); }
-    .cta:disabled { opacity: .5; cursor: default; box-shadow: none; }
+    .cta:hover:not(:disabled) {
+      background: linear-gradient(180deg, #b197fc 0%, #8b5cf6 50%, #7c3aed 100%);
+      transform: translateY(-0.5px);
+      box-shadow:
+        inset 0 1px 0 rgba(255,255,255,.45),
+        inset 0 -1px 0 rgba(0,0,0,.22),
+        inset 0 -2px 4px rgba(0,0,0,.1),
+        0 2px 4px rgba(0,0,0,.15),
+        0 6px 14px rgba(124,58,237,.4),
+        0 14px 30px rgba(124,58,237,.35);
+    }
+    .cta:active:not(:disabled) {
+      transform: translateY(0.5px);
+      box-shadow:
+        inset 0 1px 2px rgba(0,0,0,.25),
+        inset 0 -1px 0 rgba(255,255,255,.15),
+        0 1px 2px rgba(124,58,237,.3);
+    }
+    .cta:disabled {
+      background: linear-gradient(180deg, #d6d6dc 0%, #c0c0c8 100%);
+      color: #888;
+      box-shadow:
+        inset 0 1px 0 rgba(255,255,255,.4),
+        inset 0 -1px 0 rgba(0,0,0,.1);
+      text-shadow: none;
+    }
     .cta svg { width: 13px; height: 13px; }
 
     #error {
@@ -432,8 +678,8 @@
       <div class="footer">
         <button class="cta" id="compare" disabled>
           <svg viewBox="0 0 24 24" fill="none" aria-label="Frame">
-            <rect x="4" y="4" width="16" height="16" rx="1.5" stroke="white" stroke-width="2"/>
-            <path d="M8 2v4M16 2v4M8 18v4M16 18v-4M2 8h4M2 16h4M18 8h4M18 16h-4" stroke="white" stroke-width="2" stroke-linecap="round"/>
+            <rect x="4" y="4" width="16" height="16" rx="1.5" stroke="currentColor" stroke-width="2"/>
+            <path d="M8 2v4M16 2v4M8 18v4M16 18v-4M2 8h4M2 16h4M18 8h4M18 16h-4" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
           </svg>
           Compare on canvas
         </button>
@@ -476,9 +722,13 @@
         return `<div class="swatch${sel?'':' disabled'}" style="background:${sel?`linear-gradient(135deg, ${swatchColor}33, ${swatchColor}11)`:''}; color:${sel?swatchColor:''}" title="${escapeHtml(m.name)}">${escapeHtml(m.name)}</div>`;
       }).join('');
 
-      const collectionOptions = options.map(c =>
-        `<option value="${c.id}" ${c.id===group.collectionId?'selected':''}>${escapeHtml(c.name)}</option>`
-      ).join('');
+      const collectionOptions = options.length ? options.map(c => {
+        const isActive = c.id === group.collectionId;
+        return `<button class="dd-option${isActive ? ' active' : ''}" data-dd-value="${c.id}" type="button">
+          <svg class="check" viewBox="0 0 12 12" fill="none"><path d="M2.5 6 L5 8.5 L9.5 3.5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          <span>${escapeHtml(c.name)}</span>
+        </button>`;
+      }).join('') : `<div class="dd-empty">No collections available</div>`;
 
       const modePills = selectedModeIds.map(mid => {
         const mode = collection.modes.find(m => m.id === mid) || {id: mid, name: 'Unknown'};
@@ -500,7 +750,13 @@
           <div class="card-count">${selectedModeIds.length}/${totalModes}</div>
           <button class="card-remove" data-remove-group title="Remove group">×</button>
         </div>
-        <select class="collection-pick" data-collection-select>${collectionOptions || '<option value="">No collections available</option>'}</select>
+        <div class="dd" data-dropdown>
+          <button class="dd-trigger" data-dropdown-trigger type="button">
+            <span class="dd-label">${escapeHtml(collection.name)}</span>
+            <svg class="dd-chevron" viewBox="0 0 12 12" fill="none"><path d="M3 4.5 L6 7.5 L9 4.5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </button>
+          <div class="dd-menu" data-dropdown-menu>${collectionOptions}</div>
+        </div>
         <div class="modes">
           ${modePills}
           ${allUsed ? '' : `<button class="add-pill" data-add-mode>＋ Add mode</button>`}
@@ -514,22 +770,44 @@
         errorEl.textContent = '';
       };
 
-      // Collection change
-      const collectionSelect = wrapper.querySelector('[data-collection-select]');
-      collectionSelect.onchange = () => {
-        const nextId = collectionSelect.value;
-        if (!nextId) return;
-        if (groups.some((g,i) => i !== index && g.collectionId === nextId)) {
-          errorEl.textContent = 'That collection is already used by another group.';
-          collectionSelect.value = group.collectionId;
-          return;
-        }
-        errorEl.textContent = '';
-        const newCollection = collectionById(nextId);
-        group.collectionId = nextId;
-        group.modes = newCollection && newCollection.modes.length ? [newCollection.modes[0].id] : [];
-        render();
+      // Custom dropdown — open/close + select
+      const dd = wrapper.querySelector('[data-dropdown]');
+      const ddTrigger = dd.querySelector('[data-dropdown-trigger]');
+      const ddMenu = dd.querySelector('[data-dropdown-menu]');
+
+      const closeDd = () => {
+        ddTrigger.classList.remove('open');
+        ddMenu.classList.remove('open');
       };
+
+      ddTrigger.onclick = (e) => {
+        e.stopPropagation();
+        // Close any other open dropdowns
+        document.querySelectorAll('.dd-menu.open').forEach(m => {
+          m.classList.remove('open');
+          m.closest('.dd').querySelector('.dd-trigger').classList.remove('open');
+        });
+        ddTrigger.classList.toggle('open');
+        ddMenu.classList.toggle('open');
+      };
+
+      dd.querySelectorAll('[data-dd-value]').forEach(opt => {
+        opt.onclick = (e) => {
+          e.stopPropagation();
+          const nextId = opt.dataset.ddValue;
+          if (groups.some((g, i) => i !== index && g.collectionId === nextId)) {
+            errorEl.textContent = 'That collection is already used by another group.';
+            closeDd();
+            return;
+          }
+          errorEl.textContent = '';
+          const newCollection = collectionById(nextId);
+          group.collectionId = nextId;
+          group.modes = newCollection && newCollection.modes.length ? [newCollection.modes[0].id] : [];
+          closeDd();
+          render();
+        };
+      });
 
       // Remove mode pill
       wrapper.querySelectorAll('[data-remove-mode]').forEach(btn => {
@@ -644,6 +922,16 @@
         document.querySelectorAll('.nav').forEach(n => n.classList.remove('active'));
         nav.classList.add('active');
       };
+    });
+
+    // Close any open custom dropdown when clicking outside
+    document.addEventListener('click', (e) => {
+      if (!e.target.closest('.dd')) {
+        document.querySelectorAll('.dd-menu.open').forEach(m => {
+          m.classList.remove('open');
+          m.closest('.dd').querySelector('.dd-trigger').classList.remove('open');
+        });
+      }
     });
 
     window.onmessage = e => {
