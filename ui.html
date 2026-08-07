@@ -769,8 +769,12 @@
       overflow: hidden;
       transition: opacity .28s ease, max-height .42s cubic-bezier(.22,1,.36,1), transform .42s cubic-bezier(.22,1,.36,1), margin .42s ease;
     }
-    .selection-hero.is-scrolled .selection-count {
-      line-height: 1;
+    .selection-hero.is-scrolled .selection-info {
+      display: none;
+    }
+    .selection-hero.is-scrolled {
+      min-height: 60px;
+      padding: 6px 10px;
     }
 
     .selection-hero.has-selection .selection-orb .orb-icon { color: white; }
@@ -893,11 +897,9 @@
 
     .footer {
       flex: none;
-      padding: 8px 12px 10px 2px;
-      border-top: 1px solid var(--line);
-      background: var(--bg);
-      transition: background .65s cubic-bezier(0.65, 0, 0.35, 1),
-                  border-color .65s cubic-bezier(0.65, 0, 0.35, 1);
+      padding: 10px 12px 12px 2px;
+      background: transparent;
+      transition: background 1s ease;
     }
     .cta {
       width: 100%; border: 0; border-radius: 12px;
@@ -944,23 +946,22 @@
         0 1px 2px rgba(124,58,237,.3);
     }
     .cta:disabled {
-      background: linear-gradient(180deg, rgba(255,255,255,.22) 0%, rgba(255,255,255,.12) 100%);
-      backdrop-filter: blur(10px) saturate(180%);
-      -webkit-backdrop-filter: blur(10px) saturate(180%);
-      border: 1px solid rgba(255,255,255,.35);
+      background: linear-gradient(180deg, rgba(255,255,255,.08) 0%, rgba(255,255,255,.04) 100%);
+      backdrop-filter: blur(12px) saturate(180%);
+      -webkit-backdrop-filter: blur(12px) saturate(180%);
+      border: 1px solid rgba(255,255,255,.18);
       color: var(--muted);
       box-shadow:
-        inset 0 1px 0 rgba(255,255,255,.4),
-        0 1px 2px rgba(60,30,120,.04);
+        inset 0 1px 0 rgba(255,255,255,.25),
+        0 1px 2px rgba(60,30,120,.03);
       text-shadow: none;
       cursor: not-allowed;
-      opacity: .85;
     }
     .plugin.dark .cta:disabled {
-      background: linear-gradient(180deg, rgba(255,255,255,.04) 0%, rgba(255,255,255,.01) 100%);
-      backdrop-filter: blur(10px) saturate(170%);
-      -webkit-backdrop-filter: blur(10px) saturate(170%);
-      border-color: rgba(255,255,255,.08);
+      background: linear-gradient(180deg, rgba(255,255,255,.03) 0%, rgba(255,255,255,.01) 100%);
+      backdrop-filter: blur(12px) saturate(170%);
+      -webkit-backdrop-filter: blur(12px) saturate(170%);
+      border-color: rgba(255,255,255,.06);
       box-shadow:
         inset 0 1px 0 rgba(255,255,255,.04),
         0 1px 2px rgba(0,0,0,.2);
