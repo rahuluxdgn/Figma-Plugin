@@ -3,10 +3,10 @@
 <head>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Geist:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Geist+Mono:wght@400;500;600;700&display=swap" rel="stylesheet">
   <style>
     :root {
-      --font: "Geist", -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      --font: "Geist Mono", ui-monospace, "SF Mono", Menlo, Consolas, monospace;
       --bg: #ffffff;
       --text: #12121a;
       --muted: #6b6b72;
@@ -392,9 +392,9 @@
           <div class="selection-orb">
             <div class="orb-glow"></div>
             <div class="orb-icon">
-              <svg viewBox="0 0 24 24" fill="none">
-                <rect x="3" y="3" width="14" height="14" rx="2" stroke="currentColor" stroke-width="1.8"/>
-                <rect x="7" y="7" width="14" height="14" rx="2" stroke="currentColor" stroke-width="1.8" opacity=".5"/>
+              <svg viewBox="0 0 24 24" fill="none" aria-label="Frame">
+                <path d="M3 8V5a2 2 0 0 1 2-2h3M16 3h3a2 2 0 0 1 2 2v3M21 16v3a2 2 0 0 1-2 2h-3M8 21H5a2 2 0 0 1-2-2v-3" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+                <path d="M3 12h18M12 3v18" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" opacity=".7"/>
               </svg>
             </div>
             <div class="orb-pulse"></div>
@@ -403,7 +403,7 @@
             <div class="selection-eyebrow">SELECTION</div>
             <div class="selection-count" id="status">
               <span class="count-num">0</span>
-              <span class="count-lbl">nodes</span>
+              <span class="count-lbl">frames</span>
             </div>
             <div class="selection-sub" id="selectionSub">Pick frames, components, or instances</div>
           </div>
@@ -604,7 +604,7 @@
       const countLbl = hero.querySelector('.count-lbl');
       const sub = $('selectionSub');
       countNum.textContent = count;
-      countLbl.textContent = count === 1 ? 'node' : 'nodes';
+      countLbl.textContent = count === 1 ? 'frame' : 'frames';
       if (count === 0) {
         hero.classList.remove('has-selection');
         sub.textContent = 'Pick frames, components, or instances';
