@@ -2,9 +2,15 @@
 const GENERATED_PREFIX = "Theme Compare — ";
 async function init() {
     const collections = await figma.variables.getLocalVariableCollectionsAsync();
-    const data = collections.map((collection) => ({ id: collection.id, name: collection.name, modes: collection.modes.map((mode) => ({ id: mode.modeId, name: mode.name })) }));
+    const data = collections.map((collection) => ({
+        id: collection.id,
+        name: collection.name,
+        modes: collection.modes.map((mode) => ({ id: mode.modeId, name: mode.name })),
+    }));
+    // Preload the Inter Semi Bold font once so first use does not race the UI.
+    await figma.loadFontAsync({ family: "Inter", style: "Semi Bold" });
     const html = __html__.replace("__COLLECTIONS__", JSON.stringify(data).replace(/</g, "\\u003c"));
-    figma.showUI(html, { width: 420, height: 620, themeColors: true });
+    figma.showUI(html, { width: 420, height: 720, themeColors: true });
     figma.on("selectionchange", () => figma.ui.postMessage({ type: "selection", count: figma.currentPage.selection.length }));
     figma.ui.postMessage({ type: "selection", count: figma.currentPage.selection.length });
 }
@@ -15,35 +21,51 @@ figma.ui.onmessage = async (message) => {
         return;
     }
     try {
+        if (!message.groups.length)
+            throw new Error("Add at least one collection group before comparing.");
         const sources = getSourceNodes();
-        const collection = await figma.variables.getVariableCollectionByIdAsync(message.collectionId);
-        if (!collection)
-            throw new Error("The selected variable collection is no longer available.");
-        const minX = Math.min(...sources.map(n => n.x)), minY = Math.min(...sources.map(n => n.y));
+        const minX = Math.min(...sources.map(n => n.x));
+        const minY = Math.min(...sources.map(n => n.y));
         const width = Math.max(...sources.map(n => n.x + n.width)) - minX;
         const height = Math.max(...sources.map(n => n.y + n.height)) - minY;
-        const gap = 48, panelGap = 64;
-        const comparison = figma.createSection();
-        comparison.name = `${GENERATED_PREFIX}${sources[0].name}`;
-        comparison.x = Math.max(...sources.map(n => n.x + n.width)) + 96;
-        comparison.y = minY;
-        comparison.resize(Math.max(message.modes.length * width + (message.modes.length - 1) * panelGap + 64, 640), height + 96);
-        comparison.fills = [{ type: "SOLID", color: { r: 0.94, g: 0.95, b: 0.97 } }];
-        for (let i = 0; i < message.modes.length; i++) {
-            const mode = message.modes[i], panelX = gap + i * (width + panelGap);
-            await addLabel(comparison, mode.name, panelX, 24);
-            for (const source of sources) {
-                const clone = source.clone();
-                clone.name = `${mode.name} — ${source.name}`;
-                comparison.appendChild(clone);
-                clone.x = panelX + source.x - minX;
-                clone.y = 64 + source.y - minY;
-                applyMode(clone, message.collectionId, mode.id);
+        const gap = 48;
+        const panelGap = 64;
+        const created = [];
+        let cursorX = Math.max(...sources.map(n => n.x + n.width)) + 96;
+        for (const group of message.groups) {
+            if (!group.modes.length)
+                continue;
+            const collection = await figma.variables.getVariableCollectionByIdAsync(group.collectionId);
+            if (!collection)
+                throw new Error("One of the selected variable collections is no longer available.");
+            const section = figma.createSection();
+            const labelCollection = collection.name;
+            section.name = `${GENERATED_PREFIX}${sources[0].name} — ${labelCollection}`;
+            section.x = cursorX;
+            section.y = minY;
+            section.resize(Math.max(group.modes.length * width + (group.modes.length - 1) * panelGap + 64, 640), height + 96);
+            section.fills = [{ type: "SOLID", color: { r: 0.94, g: 0.95, b: 0.97 } }];
+            for (let i = 0; i < group.modes.length; i++) {
+                const mode = group.modes[i];
+                const panelX = gap + i * (width + panelGap);
+                await addLabel(section, mode.name, panelX, 24);
+                for (const source of sources) {
+                    const clone = source.clone();
+                    clone.name = `${mode.name} — ${source.name}`;
+                    section.appendChild(clone);
+                    clone.x = panelX + source.x - minX;
+                    clone.y = 64 + source.y - minY;
+                    applyMode(clone, group.collectionId, mode.id);
+                }
             }
+            created.push(section);
+            cursorX = section.x + section.width + 96;
         }
-        figma.currentPage.selection = [comparison];
-        figma.viewport.scrollAndZoomIntoView([comparison]);
-        figma.notify(`${message.modes.length} mode comparison created`);
+        if (!created.length)
+            throw new Error("Each group needs at least one mode selected.");
+        figma.currentPage.selection = created;
+        figma.viewport.scrollAndZoomIntoView(created);
+        figma.notify(`${created.length} collection panel${created.length === 1 ? "" : "s"} created`);
     }
     catch (error) {
         figma.ui.postMessage({ type: "error", message: error instanceof Error ? error.message : "Unable to create comparison." });
@@ -66,6 +88,7 @@ function applyMode(node, collectionId, modeId) {
 }
 async function addLabel(parent, text, x, y) {
     const label = figma.createText();
+    // Font is preloaded in init; reloading here is safe and guarantees availability.
     await figma.loadFontAsync({ family: "Inter", style: "Semi Bold" });
     label.fontName = { family: "Inter", style: "Semi Bold" };
     label.fontSize = 16;
