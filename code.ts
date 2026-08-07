@@ -16,7 +16,7 @@ async function init() {
   // Preload the Inter Semi Bold font once so first use does not race the UI.
   await figma.loadFontAsync({ family: "Inter", style: "Semi Bold" });
   const html = __html__.replace("__COLLECTIONS__", JSON.stringify(data).replace(/</g, "\\u003c"));
-  figma.showUI(html, { width: 420, height: 560, themeColors: true });
+  figma.showUI(html, { width: 520, height: 560, themeColors: true });
   figma.on("selectionchange", () => figma.ui.postMessage({ type: "selection", count: figma.currentPage.selection.length }));
   figma.ui.postMessage({ type: "selection", count: figma.currentPage.selection.length });
 }

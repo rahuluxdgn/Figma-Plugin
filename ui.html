@@ -2,180 +2,561 @@
 <html>
 <head>
   <style>
-    :root { font-family: Inter, -apple-system, BlinkMacSystemFont, sans-serif; color: var(--figma-color-text); background: var(--figma-color-bg); }
+    :root {
+      --font: Inter, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      --bg: #ffffff;
+      --text: #12121a;
+      --muted: #6b6b72;
+      --soft: #f6f6f8;
+      --line: #ebebef;
+      --line-2: #dcdce1;
+      --brand-1: #ff5db1;
+      --brand-2: #7c3aed;
+      --brand-3: #3b82f6;
+      --accent: #7c3aed;
+    }
     * { box-sizing: border-box; }
-    body { margin: 0; padding: 16px 18px 82px; font-size: 11px; overflow-y: auto; }
-    .eyebrow { color: var(--figma-color-text-secondary); font-size: 10px; font-weight: 700; letter-spacing: .08em; text-transform: uppercase; margin-bottom: 8px; }
-    h1 { margin: 0; font-size: 22px; letter-spacing: -.03em; line-height: 1.1; }
-    .intro { color: var(--figma-color-text-secondary); line-height: 1.45; margin: 8px 0 18px; font-size: 12px; }
-    .selection { display: flex; align-items: center; gap: 10px; padding: 12px; border: 1px solid var(--figma-color-border); border-radius: 10px; background: var(--figma-color-bg-secondary); margin-bottom: 18px; }
-    .selection-icon { width: 28px; height: 28px; border-radius: 7px; display: grid; place-items: center; background: var(--figma-color-bg-brand); color: white; font-size: 14px; }
-    .selection-copy { min-width: 0; flex: 1; } .selection-title { font-weight: 700; } .selection-subtitle { color: var(--figma-color-text-secondary); margin-top: 2px; }
-    .section-title { display: flex; justify-content: space-between; align-items: center; margin: 0 0 8px; font-size: 11px; font-weight: 700; }
-    .section-title span { color: var(--figma-color-text-tertiary); font-weight: 500; }
-    .group { border: 1px solid var(--figma-color-border); border-radius: 10px; background: var(--figma-color-bg-secondary); padding: 12px; margin-bottom: 10px; border-top: 2px solid #7b61ff; }
-    .group-header { display: flex; align-items: center; justify-content: space-between; gap: 8px; margin-bottom: 10px; }
-    .group-title { display: flex; align-items: center; gap: 8px; font-weight: 700; }
-    .group-dot { width: 8px; height: 8px; border-radius: 50%; background: #7b61ff; }
-    .group-remove { border: 1px solid var(--figma-color-border); background: var(--figma-color-bg); color: var(--figma-color-text-secondary); border-radius: 6px; padding: 4px 8px; cursor: pointer; font-size: 11px; }
-    .group-remove:hover { color: var(--figma-color-text-danger); }
-    .group-collection-label { font-size: 10px; color: var(--figma-color-text-secondary); font-weight: 700; letter-spacing: .04em; text-transform: uppercase; margin-bottom: 4px; }
-    .row { display: flex; gap: 8px; align-items: center; margin-bottom: 8px; }
-    .row:last-child { margin-bottom: 0; }
-    .row .badge { width: 8px; height: 8px; border-radius: 50%; background: #7b61ff; flex: none; }
-    .row select { flex: 1; }
-    .row .mode-remove { width: 26px; height: 26px; border: 1px solid var(--figma-color-border); background: var(--figma-color-bg); color: var(--figma-color-text-secondary); border-radius: 6px; cursor: pointer; padding: 0; font-size: 13px; line-height: 1; }
-    .row .mode-remove:hover { color: var(--figma-color-text-danger); }
-    .empty { color: var(--figma-color-text-tertiary); font-size: 10px; padding: 4px 0; }
-    select { width: 100%; border: 1px solid var(--figma-color-border); border-radius: 7px; padding: 8px 7px; background: var(--figma-color-bg); color: var(--figma-color-text); font-size: 11px; }
-    .add-mode { width: 100%; border: 1px dashed var(--figma-color-border); background: transparent; color: var(--figma-color-text-secondary); border-radius: 7px; padding: 7px; cursor: pointer; font-size: 11px; margin-top: 8px; }
-    .add-mode:hover:not(:disabled) { color: var(--figma-color-text); border-color: var(--figma-color-text-secondary); }
-    .add-group { width: 100%; border: 1px dashed var(--figma-color-border); background: transparent; color: var(--figma-color-text-secondary); border-radius: 8px; padding: 9px; cursor: pointer; font-size: 11px; margin-top: 6px; }
-    .add-group:hover:not(:disabled) { color: var(--figma-color-text); border-color: var(--figma-color-text-secondary); }
-    .panel-preview { display: flex; gap: 4px; margin-top: 10px; padding-top: 10px; border-top: 1px dashed var(--figma-color-border); }
-    .panel-preview-cell { flex: 1; height: 22px; border-radius: 4px; background: linear-gradient(135deg, rgba(123, 97, 255, 0.18), rgba(123, 97, 255, 0.08)); border: 1px solid var(--figma-color-border); display: flex; align-items: center; justify-content: center; font-size: 9px; color: var(--figma-color-text-secondary); overflow: hidden; white-space: nowrap; text-overflow: ellipsis; padding: 0 4px; }
-    .panel-preview-cell.disabled { opacity: 0.4; }
-    .hint { color: var(--figma-color-text-secondary); font-size: 10px; line-height: 1.4; margin: 12px 2px 0; }
-    .footer { position: fixed; bottom: 0; left: 0; right: 0; padding: 12px 18px 16px; background: var(--figma-color-bg); border-top: 1px solid var(--figma-color-border); }
-    button.primary { width: 100%; border: 0; border-radius: 8px; padding: 11px; background: var(--figma-color-bg-brand); color: white; cursor: pointer; font-weight: 700; font-size: 12px; }
-    button:disabled { opacity: .45; cursor: default; }
-    #error { color: var(--figma-color-text-danger); min-height: 15px; margin-top: 10px; line-height: 1.35; }
+    html, body { margin: 0; padding: 0; width: 100%; height: 100%; }
+    body {
+      font-family: var(--font);
+      color: var(--text);
+      background: transparent;
+      font-size: 13px;
+      overflow: hidden;
+    }
+    /* Gradient frame wraps the plugin so the gradient is only a border, not full background */
+    .frame {
+      /* Fit the Figma plugin viewport exactly; never extend into the toolbar. */
+      margin: 0;
+      height: 100%;
+      max-height: 100%;
+      background: linear-gradient(135deg, var(--brand-1) 0%, var(--brand-2) 50%, var(--brand-3) 100%);
+      border-radius: 0;
+      padding: 4px;
+      box-shadow: none;
+      display: flex;
+    }
+    .plugin {
+      background: var(--bg);
+      border-radius: 16px;
+      width: 100%;
+      height: 100%;
+      display: flex;
+      flex-direction: column;
+      overflow: hidden;
+    }
+
+    /* Header */
+    .header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 10px 14px;
+      flex: none;
+    }
+    .logo { display: flex; align-items: center; gap: 9px; }
+    .logo-mark {
+      width: 30px; height: 30px; border-radius: 8px;
+      background: linear-gradient(135deg, #ff5db1 0%, #7c3aed 100%);
+      display: grid; place-items: center; color: white;
+      box-shadow: 0 3px 8px rgba(124,58,237,.3);
+    }
+    .logo-mark svg { width: 16px; height: 16px; }
+    .logo-title { font-size: 15px; font-weight: 700; letter-spacing: -.01em; }
+    .close {
+      width: 28px; height: 28px; border-radius: 14px;
+      background: var(--soft); border: 0; color: var(--muted);
+      cursor: pointer; display: grid; place-items: center;
+      font-size: 14px; line-height: 1;
+    }
+    .close:hover { background: var(--line); color: var(--text); }
+
+    /* Body layout */
+    .body { display: flex; flex: 1; min-height: 0; overflow: hidden; }
+
+    /* Sidebar */
+    .sidebar {
+      width: 116px; padding: 2px 8px 10px;
+      display: flex; flex-direction: column; gap: 2px;
+      flex: none;
+    }
+    .nav {
+      display: flex; align-items: center; padding: 7px 11px;
+      border-radius: 9px; cursor: pointer;
+      font-size: 12px; font-weight: 500; color: var(--muted);
+      border: 0; background: transparent; text-align: left;
+      width: 100%;
+    }
+    .nav:hover { background: var(--soft); }
+    .nav.active {
+      background: var(--text); color: white; font-weight: 600;
+    }
+
+    /* Main content wrapper (column with scrollable main + fixed footer) */
+    .main-wrapper {
+      flex: 1; min-width: 0; min-height: 0;
+      display: flex; flex-direction: column;
+    }
+    .main {
+      flex: 1; min-width: 0; padding: 8px 12px 8px 2px;
+      display: flex; flex-direction: column; gap: 9px;
+      overflow-y: auto;
+      min-height: 0;
+    }
+    .main::-webkit-scrollbar { width: 5px; }
+    .main::-webkit-scrollbar-thumb { background: var(--line-2); border-radius: 3px; }
+
+    /* (legacy eyebrow/meta/tabs removed — replaced by .section-head) */
+
+    /* Cards */
+    .cards { display: flex; flex-direction: column; gap: 10px; }
+    .card {
+      background: white; border: 1px solid var(--line); border-radius: 12px;
+      padding: 9px 11px; display: flex; flex-direction: column; gap: 7px;
+      box-shadow: 0 1px 2px rgba(0,0,0,.04);
+    }
+    .card-head {
+      display: flex; align-items: center; gap: 10px;
+    }
+    .checkbox {
+      width: 18px; height: 18px; border-radius: 5px; flex: none;
+      background: var(--accent); display: grid; place-items: center;
+      color: white; cursor: pointer;
+    }
+    .checkbox.unchecked {
+      background: white; border: 1.5px solid var(--line-2);
+    }
+    .checkbox svg { width: 11px; height: 11px; }
+    .card-label { flex: 1; font-weight: 600; font-size: 13px; }
+    .card-count {
+      padding: 3px 8px; border-radius: 6px;
+      background: var(--soft); color: var(--muted);
+      font-size: 11px; font-weight: 500;
+    }
+    .card-remove {
+      width: 22px; height: 22px; border-radius: 6px;
+      background: transparent; border: 0; color: var(--muted);
+      cursor: pointer; display: grid; place-items: center;
+      font-size: 14px; line-height: 1;
+    }
+    .card-remove:hover { background: var(--soft); color: #ef4444; }
+
+    .collection-pick {
+      width: 100%; border: 1px solid var(--line); border-radius: 9px;
+      padding: 6px 9px; background: #fafafb;
+      font-family: inherit; font-size: 11.5px; color: var(--text);
+    }
+    .collection-pick:focus { outline: 2px solid var(--accent); outline-offset: -1px; }
+
+    .modes {
+      display: flex; flex-wrap: wrap; gap: 6px;
+    }
+    .mode-pill {
+      display: inline-flex; align-items: center; gap: 5px;
+      padding: 4px 8px 4px 8px; border-radius: 999px;
+      background: linear-gradient(135deg, rgba(124,58,237,.08), rgba(255,93,177,.08));
+      border: 1px solid rgba(124,58,237,.2);
+      font-size: 10.5px; font-weight: 600; color: var(--accent);
+    }
+    .mode-pill .x {
+      width: 14px; height: 14px; border-radius: 7px;
+      background: rgba(124,58,237,.18); display: grid; place-items: center;
+      cursor: pointer; color: var(--accent);
+    }
+    .mode-pill .x:hover { background: rgba(124,58,237,.3); color: white; }
+    .add-pill {
+      padding: 5px 10px; border-radius: 999px;
+      background: white; border: 1px dashed var(--line-2);
+      color: var(--muted); cursor: pointer; font-size: 11px;
+      font-weight: 500; font-family: inherit;
+    }
+    .add-pill:hover:not(:disabled) { color: var(--text); border-color: var(--muted); }
+    .add-pill:disabled { opacity: .5; cursor: default; }
+
+    .swatches {
+      display: flex; gap: 4px;
+      padding-top: 6px; border-top: 1px dashed var(--line);
+    }
+    .swatch {
+      flex: 1; height: 22px; border-radius: 5px;
+      background: linear-gradient(135deg, rgba(124,58,237,.18), rgba(124,58,237,.06));
+      border: 1px solid var(--line);
+      display: flex; align-items: center; justify-content: center;
+      font-size: 8.5px; color: var(--muted); font-weight: 600;
+      overflow: hidden; white-space: nowrap;
+      padding: 0 3px;
+    }
+    .swatch.disabled { opacity: .35; }
+
+    .add-card {
+      width: 100%; border: 1px dashed var(--line-2);
+      background: transparent; color: var(--muted); border-radius: 12px;
+      padding: 9px; cursor: pointer; font-size: 11px;
+      font-weight: 500; font-family: inherit;
+    }
+    .add-card:hover:not(:disabled) {
+      color: var(--text); border-color: var(--muted);
+    }
+    .add-card:disabled { opacity: .5; cursor: default; }
+
+    /* Selection strip */
+    .selection-strip {
+      display: flex; align-items: center; gap: 9px;
+      padding: 8px 11px; border-radius: 10px;
+      background: var(--soft); border: 1px solid var(--line);
+      font-size: 10.5px;
+    }
+    .selection-strip .ico {
+      width: 22px; height: 22px; border-radius: 6px;
+      background: var(--accent); color: white;
+      display: grid; place-items: center; font-size: 11px; flex: none;
+    }
+    .selection-strip .copy { flex: 1; min-width: 0; }
+    .selection-strip .title { font-weight: 700; font-size: 11.5px; }
+    .selection-strip .sub { color: var(--muted); margin-top: 1px; }
+
+    /* Selection hero — the visual anchor of the UI */
+    .selection-hero {
+      position: relative;
+      display: flex; align-items: center; gap: 14px;
+      padding: 14px 14px;
+      border-radius: 14px;
+      background: linear-gradient(135deg, #faf7ff 0%, #f4f0ff 50%, #eef4ff 100%);
+      border: 1px solid rgba(124, 58, 237, .12);
+      overflow: hidden;
+      transition: all .25s ease;
+    }
+    .selection-hero.has-selection {
+      background: linear-gradient(135deg, #7c3aed 0%, #a855f7 60%, #ec4899 100%);
+      border-color: transparent;
+      box-shadow: 0 8px 24px rgba(124, 58, 237, .35);
+    }
+    .selection-hero.has-selection .selection-eyebrow,
+    .selection-hero.has-selection .selection-sub { color: rgba(255,255,255,.85); }
+    .selection-hero.has-selection .count-num,
+    .selection-hero.has-selection .count-lbl { color: white; }
+
+    .selection-orb {
+      position: relative;
+      width: 48px; height: 48px;
+      flex: none;
+      border-radius: 14px;
+      background: white;
+      display: grid; place-items: center;
+      box-shadow: 0 4px 12px rgba(124, 58, 237, .25),
+                  inset 0 0 0 1px rgba(124, 58, 237, .1);
+    }
+    .selection-orb .orb-icon {
+      position: relative; z-index: 2;
+      color: var(--accent);
+      width: 24px; height: 24px;
+      display: grid; place-items: center;
+    }
+    .selection-orb .orb-icon svg { width: 100%; height: 100%; }
+    .selection-orb .orb-glow {
+      position: absolute; inset: -4px;
+      border-radius: 18px;
+      background: radial-gradient(circle, rgba(124,58,237,.35), transparent 70%);
+      opacity: .6;
+    }
+    .selection-orb .orb-pulse {
+      position: absolute; inset: 0;
+      border-radius: 14px;
+      border: 2px solid rgba(124, 58, 237, .35);
+      opacity: 0;
+    }
+    .selection-hero.has-selection .selection-orb {
+      background: rgba(255,255,255,.18);
+      box-shadow: 0 4px 16px rgba(0,0,0,.2);
+      backdrop-filter: blur(8px);
+    }
+    .selection-hero.has-selection .selection-orb .orb-icon { color: white; }
+    .selection-hero.has-selection .selection-orb .orb-glow {
+      background: radial-gradient(circle, rgba(255,255,255,.5), transparent 70%);
+    }
+    .selection-hero.has-selection .selection-orb .orb-pulse {
+      animation: pulse 2s ease-out infinite;
+    }
+    @keyframes pulse {
+      0% { transform: scale(1); opacity: .8; }
+      100% { transform: scale(1.6); opacity: 0; }
+    }
+
+    .selection-info { flex: 1; min-width: 0; }
+    .selection-eyebrow {
+      font-size: 9px; font-weight: 700; letter-spacing: 1.2px;
+      color: var(--accent); text-transform: uppercase;
+      margin-bottom: 2px;
+    }
+    .selection-count {
+      display: flex; align-items: baseline; gap: 6px;
+      line-height: 1;
+    }
+    .selection-count .count-num {
+      font-size: 28px; font-weight: 800; letter-spacing: -.02em;
+      color: var(--text);
+      font-variant-numeric: tabular-nums;
+    }
+    .selection-count .count-lbl {
+      font-size: 12px; font-weight: 600; color: var(--muted);
+    }
+    .selection-sub {
+      font-size: 10.5px; color: var(--muted);
+      margin-top: 4px; line-height: 1.35;
+    }
+
+    /* Section header — clean hierarchy between Selection and Groups */
+    .section-head {
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 2px 4px 0;
+    }
+    .section-title { display: flex; align-items: baseline; gap: 8px; }
+    .title-main { font-size: 13px; font-weight: 700; color: var(--text); }
+    .title-meta { font-size: 10.5px; color: var(--muted); font-weight: 500; }
+    .section-stat {
+      display: inline-flex; align-items: center; gap: 5px;
+      padding: 3px 8px; border-radius: 999px;
+      background: var(--soft); font-size: 10.5px; font-weight: 600;
+      color: var(--text);
+    }
+    .stat-dot {
+      width: 6px; height: 6px; border-radius: 3px;
+      background: linear-gradient(135deg, #7c3aed, #ec4899);
+    }
+
+    /* Footer (always pinned at bottom of main-wrapper, not scrollable) */
+    .footer {
+      flex: none;
+      padding: 8px 12px 10px 2px;
+      border-top: 1px solid var(--line);
+      background: var(--bg);
+    }
+    .cta {
+      width: 100%; border: 0; border-radius: 12px;
+      padding: 10px 14px; color: white; cursor: pointer;
+      font-weight: 700; font-size: 12.5px; font-family: inherit;
+      display: flex; align-items: center; justify-content: center; gap: 7px;
+      background: linear-gradient(135deg, #5b21b6 0%, #8b5cf6 100%);
+      box-shadow: 0 6px 18px rgba(124,58,237,.4),
+                  0 2px 6px rgba(124,58,237,.25);
+    }
+    .cta:hover:not(:disabled) { transform: translateY(-1px); }
+    .cta:disabled { opacity: .5; cursor: default; box-shadow: none; }
+    .cta svg { width: 13px; height: 13px; }
+
+    #error {
+      color: #ef4444; font-size: 10.5px; min-height: 12px; line-height: 1.3;
+      padding: 0 2px;
+    }
+    .hint {
+      color: var(--muted); font-size: 9.5px; line-height: 1.35; padding: 0 2px;
+    }
+
+    .selection-empty { color: var(--muted); }
   </style>
 </head>
 <body>
-  <div class="eyebrow">Developer handoff tool</div>
-  <h1>Theme Compare</h1>
-  <p class="intro">Stack horizontal panels—each from its own variable collection—side by side on canvas.</p>
+  <div class="frame">
+  <div class="plugin">
+    <div class="header">
+      <div class="logo">
+        <div class="logo-mark">
+          <svg viewBox="0 0 24 24" fill="none" aria-label="Frame">
+            <rect x="4" y="4" width="16" height="16" rx="1.5" stroke="white" stroke-width="2"/>
+            <path d="M8 2v4M16 2v4M8 18v4M16 18v-4M2 8h4M2 16h4M18 8h4M18 16h-4" stroke="white" stroke-width="2" stroke-linecap="round"/>
+          </svg>
+        </div>
+        <div class="logo-title">Theme Compare</div>
+      </div>
+      <button class="close" id="close" title="Close">×</button>
+    </div>
 
-  <div class="selection">
-    <div class="selection-icon">⌘</div>
-    <div class="selection-copy"><div class="selection-title" id="status">No selection</div><div class="selection-subtitle">Select one or more frames or variants</div></div>
+    <div class="body">
+      <aside class="sidebar">
+        <button class="nav active" data-nav="themes">Themes</button>
+        <button class="nav" data-nav="compare">Compare</button>
+        <button class="nav" data-nav="present">Present</button>
+        <button class="nav" data-nav="setting">Setting</button>
+        <button class="nav" data-nav="about">About</button>
+      </aside>
+
+      <div class="main-wrapper">
+      <main class="main">
+        <!-- Selection hero -->
+        <section class="selection-hero" id="selectionHero">
+          <div class="selection-orb">
+            <div class="orb-glow"></div>
+            <div class="orb-icon">
+              <svg viewBox="0 0 24 24" fill="none">
+                <rect x="3" y="3" width="14" height="14" rx="2" stroke="currentColor" stroke-width="1.8"/>
+                <rect x="7" y="7" width="14" height="14" rx="2" stroke="currentColor" stroke-width="1.8" opacity=".5"/>
+              </svg>
+            </div>
+            <div class="orb-pulse"></div>
+          </div>
+          <div class="selection-info">
+            <div class="selection-eyebrow">SELECTION</div>
+            <div class="selection-count" id="status">
+              <span class="count-num">0</span>
+              <span class="count-lbl">nodes</span>
+            </div>
+            <div class="selection-sub" id="selectionSub">Pick frames, components, or instances</div>
+          </div>
+        </section>
+
+        <!-- Section header -->
+        <div class="section-head">
+          <div class="section-title">
+            <span class="title-main">Collection Groups</span>
+            <span class="title-meta" id="groupCountLabel">0 groups</span>
+          </div>
+          <div class="section-stat">
+            <span class="stat-dot"></span>
+            <span id="modeCountLabel">0 modes total</span>
+          </div>
+        </div>
+
+        <div class="cards" id="cards"></div>
+        <button class="add-card" id="addGroup">＋ Add collection group</button>
+
+        <div id="error"></div>
+        <div class="hint">Each group becomes its own horizontal section on canvas. A collection can only be used once.</div>
+      </main>
+
+      <div class="footer">
+        <button class="cta" id="compare" disabled>
+          <svg viewBox="0 0 24 24" fill="none" aria-label="Frame">
+            <rect x="4" y="4" width="16" height="16" rx="1.5" stroke="white" stroke-width="2"/>
+            <path d="M8 2v4M16 2v4M8 18v4M16 18v-4M2 8h4M2 16h4M18 8h4M18 16h-4" stroke="white" stroke-width="2" stroke-linecap="round"/>
+          </svg>
+          Compare on canvas
+        </button>
+      </div>
+      </div>
+    </div>
+  </div>
   </div>
 
-  <div class="section-title">Collection groups <span id="groupCount">0 groups</span></div>
-  <div id="groups"></div>
-  <button class="add-group" id="addGroup">＋ Add collection group</button>
-  <div class="hint">Each group becomes its own horizontal section on canvas. A collection can only be used once.</div>
-  <div id="error"></div>
-  <div class="footer"><button class="primary" id="compare" disabled>Compare on canvas <span>→</span></button></div>
-
   <script>
-    const COLLECTION_SWATCH = ['#7b61ff', '#f6b73c', '#34c38f', '#f46a6a', '#50a5f1', '#e083ff'];
-    const $=id=>document.getElementById(id);
-    const collections=__COLLECTIONS__;
-    const groupsEl=$('groups'), addGroupBtn=$('addGroup'), compareBtn=$('compare'), groupCountEl=$('groupCount'), errorEl=$('error');
-    let groups=[]; // [{ collectionId, modes: [modeId, ...] }]
+    const SWATCH_COLORS = ['#7c3aed', '#10b981', '#3b82f6', '#ef4444', '#f59e0b', '#ec4899'];
+    const $ = id => document.getElementById(id);
+    const collections = __COLLECTIONS__;
+    const cardsEl = $('cards'), addGroupBtn = $('addGroup'),
+          compareBtn = $('compare'), errorEl = $('error'),
+          groupCountLabel = $('groupCountLabel'),
+          modeCountLabel = $('modeCountLabel');
+    let groups = [];
 
     function escapeHtml(v){return String(v).replace(/[&<>"']/g,ch=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#039;'}[ch]));}
     function collectionById(id){return collections.find(c=>c.id===id);}
     function usedCollectionIds(){return groups.map(g=>g.collectionId);}
     function availableCollections(forGroupIndex){
       const used=new Set(usedCollectionIds());
-      // Allow the current group to keep its own selection.
       if(forGroupIndex!==undefined){const cur=groups[forGroupIndex]?.collectionId;if(cur)used.delete(cur);}
       return collections.filter(c=>!used.has(c.id));
     }
     function makeId(){return 'g_'+Math.random().toString(36).slice(2,9);}
 
-    function renderGroup(group, index){
-      const collection=collectionById(group.collectionId) || {name:'Unknown', modes:[]};
-      const options=availableCollections(index);
-      const dotColor=COLLECTION_SWATCH[index % COLLECTION_SWATCH.length];
-      const canRemoveGroup=groups.length>1;
-      const selectedModeIds=group.modes;
-      const totalModes=collection.modes.length;
-      const allUsed=selectedModeIds.length>=totalModes;
-      const previewCells=collection.modes.map((m,i)=>{
-        const sel=selectedModeIds.includes(m.id);
-        return `<div class="panel-preview-cell${sel?'':' disabled'}" title="${escapeHtml(m.name)}">${escapeHtml(m.name)}</div>`;
+    function renderCard(group, index){
+      const collection = collectionById(group.collectionId) || {name:'Unknown', modes:[]};
+      const options = availableCollections(index);
+      const swatchColor = SWATCH_COLORS[index % SWATCH_COLORS.length];
+      const selectedModeIds = group.modes;
+      const totalModes = collection.modes.length;
+      const allUsed = selectedModeIds.length >= totalModes;
+
+      const previewCells = collection.modes.map(m => {
+        const sel = selectedModeIds.includes(m.id);
+        return `<div class="swatch${sel?'':' disabled'}" style="background:${sel?`linear-gradient(135deg, ${swatchColor}33, ${swatchColor}11)`:''}; color:${sel?swatchColor:''}" title="${escapeHtml(m.name)}">${escapeHtml(m.name)}</div>`;
       }).join('');
 
-      const modeRows=selectedModeIds.map((mid,i)=>{
-        const mode=collection.modes.find(m=>m.id===mid) || {id:mid,name:'Unknown'};
-        const options=collection.modes.map(m=>`<option value="${m.id}" ${m.id===mid?'selected':''}>${escapeHtml(m.name)}</option>`).join('');
-        const canRemove=selectedModeIds.length>1;
-        return `<div class="row" data-mode-row="${mid}"><span class="badge" style="background:${dotColor}"></span><select data-mode-select>${options}</select>${canRemove?`<button class="mode-remove" data-remove-mode title="Remove mode">×</button>`:''}</div>`;
+      const collectionOptions = options.map(c =>
+        `<option value="${c.id}" ${c.id===group.collectionId?'selected':''}>${escapeHtml(c.name)}</option>`
+      ).join('');
+
+      const modePills = selectedModeIds.map(mid => {
+        const mode = collection.modes.find(m => m.id === mid) || {id: mid, name: 'Unknown'};
+        return `<span class="mode-pill">${escapeHtml(mode.name)}<span class="x" data-remove-mode="${mid}" title="Remove mode">×</span></span>`;
       }).join('');
 
-      const collectionOptions=options.map(c=>`<option value="${c.id}" ${c.id===group.collectionId?'selected':''}>${escapeHtml(c.name)}</option>`).join('');
-
-      const wrapper=document.createElement('div');
-      wrapper.className='group';
-      wrapper.dataset.groupId=group.id;
-      wrapper.style.borderTopColor=dotColor;
-      wrapper.innerHTML=`
-        <div class="group-header">
-          <div class="group-title"><span class="group-dot" style="background:${dotColor}"></span>Group ${index+1}</div>
-          ${canRemoveGroup?`<button class="group-remove" data-remove-group>Remove group</button>`:''}
+      const wrapper = document.createElement('div');
+      wrapper.className = 'card';
+      wrapper.dataset.groupId = group.id;
+      wrapper.style.borderLeftColor = swatchColor;
+      wrapper.innerHTML = `
+        <div class="card-head">
+          <div class="checkbox" data-toggle-group title="Toggle group">
+            <svg viewBox="0 0 24 24" fill="none">
+              <path d="M5 12 L10 17 L19 7" stroke="white" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+          </div>
+          <div class="card-label" style="color:${swatchColor}">${escapeHtml(collection.name)}</div>
+          <div class="card-count">${selectedModeIds.length}/${totalModes}</div>
+          <button class="card-remove" data-remove-group title="Remove group">×</button>
         </div>
-        <div class="group-collection-label">Variable collection</div>
-        <select data-collection-select>${collectionOptions||'<option value="">No collections available</option>'}</select>
-        <div class="group-collection-label" style="margin-top:10px">Modes (${selectedModeIds.length}/${totalModes})</div>
-        ${selectedModeIds.length?modeRows:'<div class="empty">No modes selected.</div>'}
-        <button class="add-mode" data-add-mode${allUsed?' disabled':''}>${allUsed?'All modes in use':'＋ Add mode'}</button>
-        <div class="panel-preview">${previewCells}</div>
+        <select class="collection-pick" data-collection-select>${collectionOptions || '<option value="">No collections available</option>'}</select>
+        <div class="modes">
+          ${modePills}
+          ${allUsed ? '' : `<button class="add-pill" data-add-mode>＋ Add mode</button>`}
+        </div>
+        <div class="swatches">${previewCells}</div>
       `;
 
-      // Wire up controls
-      const collectionSelect=wrapper.querySelector('[data-collection-select]');
-      collectionSelect.onchange=()=>{
-        const nextId=collectionSelect.value;
-        if(!nextId){return;}
-        // Duplicate prevention: another group already uses this collection.
-        if(groups.some((g,i)=>i!==index && g.collectionId===nextId)){
-          errorEl.textContent='That collection is already used by another group.';
-          collectionSelect.value=group.collectionId;
+      // Toggle group (treat as visual indicator only - all groups are active by default)
+      wrapper.querySelector('[data-toggle-group]').onclick = () => {
+        // Could mark as inactive for future feature; for now show feedback
+        errorEl.textContent = '';
+      };
+
+      // Collection change
+      const collectionSelect = wrapper.querySelector('[data-collection-select]');
+      collectionSelect.onchange = () => {
+        const nextId = collectionSelect.value;
+        if (!nextId) return;
+        if (groups.some((g,i) => i !== index && g.collectionId === nextId)) {
+          errorEl.textContent = 'That collection is already used by another group.';
+          collectionSelect.value = group.collectionId;
           return;
         }
-        errorEl.textContent='';
-        const newCollection=collectionById(nextId);
-        group.collectionId=nextId;
-        // Reset mode selections to first mode of the new collection (keep at least one).
-        group.modes=newCollection && newCollection.modes.length ? [newCollection.modes[0].id] : [];
+        errorEl.textContent = '';
+        const newCollection = collectionById(nextId);
+        group.collectionId = nextId;
+        group.modes = newCollection && newCollection.modes.length ? [newCollection.modes[0].id] : [];
         render();
       };
 
-      wrapper.querySelectorAll('[data-mode-select]').forEach(sel=>{
-        sel.onchange=()=>{
-          const row=sel.closest('[data-mode-row]');
-          const oldId=row.dataset.modeRow;
-          const newId=sel.value;
-          if(group.modes.includes(newId)){
-            errorEl.textContent='That mode is already added to this group.';
-            sel.value=oldId;
+      // Remove mode pill
+      wrapper.querySelectorAll('[data-remove-mode]').forEach(btn => {
+        btn.onclick = () => {
+          const mid = btn.dataset.removeMode;
+          if (group.modes.length <= 1) {
+            errorEl.textContent = 'Each group needs at least one mode.';
             return;
           }
-          errorEl.textContent='';
-          group.modes=group.modes.map(m=>m===oldId?newId:m);
+          errorEl.textContent = '';
+          group.modes = group.modes.filter(m => m !== mid);
           render();
         };
       });
 
-      wrapper.querySelectorAll('[data-remove-mode]').forEach(btn=>{
-        btn.onclick=()=>{
-          const row=btn.closest('[data-mode-row]');
-          const id=row.dataset.modeRow;
-          group.modes=group.modes.filter(m=>m!==id);
-          render();
-        };
-      });
-
-      const addModeBtn=wrapper.querySelector('[data-add-mode]');
-      if(addModeBtn && !addModeBtn.disabled){
-        addModeBtn.onclick=()=>{
-          const used=new Set(group.modes);
-          const next=collection.modes.find(m=>!used.has(m.id));
-          if(!next)return;
+      // Add mode pill
+      const addModeBtn = wrapper.querySelector('[data-add-mode]');
+      if (addModeBtn && !addModeBtn.disabled) {
+        addModeBtn.onclick = () => {
+          const used = new Set(group.modes);
+          const next = collection.modes.find(m => !used.has(m.id));
+          if (!next) return;
           group.modes.push(next.id);
           render();
         };
       }
 
-      const removeGroupBtn=wrapper.querySelector('[data-remove-group]');
-      if(removeGroupBtn){
-        removeGroupBtn.onclick=()=>{
-          groups.splice(index,1);
-          if(groups.length===0)groups.push(createGroup());
+      // Remove group
+      const removeGroupBtn = wrapper.querySelector('[data-remove-group]');
+      if (removeGroupBtn) {
+        removeGroupBtn.onclick = () => {
+          groups.splice(index, 1);
+          if (groups.length === 0) groups.push(createGroup());
           render();
         };
       }
@@ -184,66 +565,89 @@
     }
 
     function createGroup(preferredCollectionId){
-      const available=availableCollections();
-      const collectionId=preferredCollectionId && available.find(c=>c.id===preferredCollectionId)
+      const available = availableCollections();
+      const collectionId = preferredCollectionId && available.find(c => c.id === preferredCollectionId)
         ? preferredCollectionId
         : (available[0]?.id || collections[0]?.id);
-      const collection=collectionById(collectionId);
+      const collection = collectionById(collectionId);
       return {
-        id:makeId(),
+        id: makeId(),
         collectionId,
         modes: collection && collection.modes.length ? [collection.modes[0].id] : []
       };
     }
 
     function render(){
-      groupsEl.innerHTML='';
-      groups.forEach((g,i)=>groupsEl.appendChild(renderGroup(g,i)));
-      const totalModes=groups.reduce((sum,g)=>sum+g.modes.length,0);
-      groupCountEl.textContent=`${groups.length} group${groups.length===1?'':'s'}`;
-      const addAvailable=availableCollections().length>0;
-      addGroupBtn.disabled=!addAvailable;
-      addGroupBtn.textContent=addAvailable?'＋ Add collection group':'All collections in use';
-      compareBtn.disabled=totalModes<2 || groups.length<1;
+      cardsEl.innerHTML = '';
+      groups.forEach((g,i) => cardsEl.appendChild(renderCard(g,i)));
+
+      const totalModes = groups.reduce((sum,g) => sum + g.modes.length, 0);
+      groupCountLabel.textContent = `${groups.length} group${groups.length === 1 ? '' : 's'}`;
+      modeCountLabel.textContent = `${totalModes} mode${totalModes === 1 ? '' : 's'} total`;
+
+      const addAvailable = availableCollections().length > 0;
+      addGroupBtn.disabled = !addAvailable;
+      addGroupBtn.textContent = addAvailable ? '＋ Add collection group' : 'All collections in use';
+      compareBtn.disabled = totalModes < 2 || groups.length < 1;
       updateStatus();
     }
 
     function updateStatus(){
-      const el=$('status');
-      const count=window.__lastSelectionCount||0;
-      el.textContent=count?`${count} ${count===1?'node':'nodes'} selected`:'No selection';
+      const count = window.__lastSelectionCount || 0;
+      const hero = $('selectionHero');
+      const countNum = hero.querySelector('.count-num');
+      const countLbl = hero.querySelector('.count-lbl');
+      const sub = $('selectionSub');
+      countNum.textContent = count;
+      countLbl.textContent = count === 1 ? 'node' : 'nodes';
+      if (count === 0) {
+        hero.classList.remove('has-selection');
+        sub.textContent = 'Pick frames, components, or instances';
+      } else {
+        hero.classList.add('has-selection');
+        sub.textContent = 'Ready to compare — pick modes below';
+      }
     }
 
-    addGroupBtn.onclick=()=>{
-      const available=availableCollections();
-      if(!available.length)return;
+    addGroupBtn.onclick = () => {
+      const available = availableCollections();
+      if (!available.length) return;
       groups.push(createGroup(available[0].id));
       render();
     };
 
-    compareBtn.onclick=()=>{
-      errorEl.textContent='';
-      const payload=groups.map(g=>{
-        const collection=collectionById(g.collectionId);
-        const modes=g.modes.map(id=>{
-          const m=collection.modes.find(mm=>mm.id===id);
-          return {id, name:m?m.name:''};
+    compareBtn.onclick = () => {
+      errorEl.textContent = '';
+      const payload = groups.map(g => {
+        const collection = collectionById(g.collectionId);
+        const modes = g.modes.map(id => {
+          const m = collection.modes.find(mm => mm.id === id);
+          return {id, name: m ? m.name : ''};
         });
-        return {collectionId:g.collectionId, modes};
-      }).filter(g=>g.modes.length>0);
-      if(!payload.length){errorEl.textContent='Select at least one mode in a group.';return;}
-      parent.postMessage({pluginMessage:{type:'compare', groups:payload}},'*');
+        return {collectionId: g.collectionId, modes};
+      }).filter(g => g.modes.length > 0);
+      if (!payload.length) { errorEl.textContent = 'Select at least one mode in a group.'; return; }
+      parent.postMessage({pluginMessage:{type:'compare', groups:payload}}, '*');
     };
 
-    window.onmessage=e=>{
-      const m=e.data.pluginMessage;
-      if(!m)return;
-      if(m.type==='selection'){window.__lastSelectionCount=m.count;updateStatus();}
-      if(m.type==='error')errorEl.textContent=m.message;
+    $('close').onclick = () => parent.postMessage({pluginMessage:{type:'cancel'}}, '*');
+
+    // Sidebar nav (visual switching)
+    document.querySelectorAll('.nav').forEach(nav => {
+      nav.onclick = () => {
+        document.querySelectorAll('.nav').forEach(n => n.classList.remove('active'));
+        nav.classList.add('active');
+      };
+    });
+
+    window.onmessage = e => {
+      const m = e.data.pluginMessage;
+      if (!m) return;
+      if (m.type === 'selection') { window.__lastSelectionCount = m.count; updateStatus(); }
+      if (m.type === 'error') errorEl.textContent = m.message;
     };
 
-    // Seed with one group using the first available collection.
-    if(collections.length)groups.push(createGroup(collections[0].id));
+    if (collections.length) groups.push(createGroup(collections[0].id));
     render();
   </script>
 </body>
