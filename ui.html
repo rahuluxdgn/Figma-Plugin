@@ -165,7 +165,7 @@
         0 6px 14px rgba(124,58,237,.28);
     }
     .logo-mark svg { width: 16px; height: 16px; }
-    .logo-title { font-size: 15px; font-weight: 700; letter-spacing: -.01em; transition: color .65s cubic-bezier(0.65, 0, 0.35, 1); }
+    .logo-title { font-size: 15px; font-weight: 700; letter-spacing: -.01em; color: var(--text); }
 
     /* Theme toggle — sits left of the close button */
     .header-actions { display: flex; align-items: center; gap: 8px; }
@@ -397,31 +397,13 @@
       color: #ef4444;
       box-shadow: inset 0 1px 0 rgba(255,255,255,.8);
     }
+    .plugin.dark .card-remove:hover {
+      background: linear-gradient(180deg, rgba(127,29,29,.4) 0%, rgba(127,29,29,.55) 100%);
+      color: #fca5a5;
+      box-shadow: inset 0 1px 0 rgba(255,255,255,.06);
+    }
 
-    .collection-pick {
-      width: 100%; border: 1px solid var(--rim-dark); border-radius: 9px;
-      padding: 6px 36px 6px 9px;
-      appearance: none;
-      -webkit-appearance: none;
-      -moz-appearance: none;
-      background:
-        url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 12 12' fill='none'><path d='M3 4.5 L6 7.5 L9 4.5' stroke='%236b6b72' stroke-width='1.5' stroke-linecap='round' stroke-linejoin='round'/></svg>")
-        no-repeat right 14px center,
-        linear-gradient(180deg, var(--surface-soft-from) 0%, var(--surface-soft-to) 100%);
-      font-family: inherit; font-size: 11.5px; color: var(--text);
-      box-shadow:
-        inset 0 1px 2px var(--inset-dark),
-        inset 0 -1px 0 var(--rim-light);
-      transition: all .15s ease;
-      cursor: pointer;
-    }
-    .collection-pick:focus {
-      outline: none;
-      background: var(--bg);
-      box-shadow:
-        inset 0 1px 2px var(--inset-dark),
-        0 0 0 2px rgba(124,58,237,.25);
-    }
+    /* (legacy .collection-pick styles removed — replaced by custom .dd dropdown) */
 
     /* Custom dropdown — replaces the native <select> for visual consistency */
     .dd { position: relative; width: 100%; }
@@ -683,7 +665,17 @@
       -webkit-backdrop-filter: blur(18px) saturate(140%);
       border-color: rgba(124, 58, 237, .25);
     }
-    .selection-hero + .section-head { margin-top: 2px; }
+    .main { position: relative; }
+    .selection-hero { margin-bottom: 38px; }
+    .selection-hero + .section-head {
+      position: absolute;
+      top: 18px;
+      right: 14px;
+      width: 48%;
+      margin-top: 0;
+      z-index: 11;
+    }
+    .selection-hero + .section-head .title-main { font-size: 12px; }
 
     .selection-hero.has-selection {
       background:
@@ -822,6 +814,11 @@
       padding: 3px 8px; border-radius: 999px;
       background: var(--soft); font-size: 10.5px; font-weight: 600;
       color: var(--text);
+      box-shadow: inset 0 1px 0 var(--rim-light);
+    }
+    .plugin.dark .section-stat {
+      background: linear-gradient(180deg, rgba(40,40,52,.6), rgba(30,30,40,.4));
+      box-shadow: inset 0 1px 0 rgba(255,255,255,.06);
     }
     .stat-dot {
       width: 6px; height: 6px; border-radius: 3px;
@@ -896,25 +893,26 @@
         0 1px 2px rgba(124,58,237,.3);
     }
     .cta:disabled {
-      background: linear-gradient(180deg, rgba(255,255,255,.45) 0%, rgba(255,255,255,.28) 100%);
-      backdrop-filter: blur(8px) saturate(150%);
-      -webkit-backdrop-filter: blur(8px) saturate(150%);
-      border: 1px solid rgba(255,255,255,.5);
+      background: linear-gradient(180deg, rgba(255,255,255,.22) 0%, rgba(255,255,255,.12) 100%);
+      backdrop-filter: blur(10px) saturate(180%);
+      -webkit-backdrop-filter: blur(10px) saturate(180%);
+      border: 1px solid rgba(255,255,255,.35);
       color: var(--muted);
       box-shadow:
-        inset 0 1px 0 rgba(255,255,255,.5),
-        0 1px 2px rgba(60,30,120,.06);
+        inset 0 1px 0 rgba(255,255,255,.4),
+        0 1px 2px rgba(60,30,120,.04);
       text-shadow: none;
       cursor: not-allowed;
+      opacity: .85;
     }
     .plugin.dark .cta:disabled {
-      background: linear-gradient(180deg, rgba(255,255,255,.06) 0%, rgba(255,255,255,.02) 100%);
-      backdrop-filter: blur(8px) saturate(140%);
-      -webkit-backdrop-filter: blur(8px) saturate(140%);
-      border-color: rgba(255,255,255,.1);
+      background: linear-gradient(180deg, rgba(255,255,255,.04) 0%, rgba(255,255,255,.01) 100%);
+      backdrop-filter: blur(10px) saturate(170%);
+      -webkit-backdrop-filter: blur(10px) saturate(170%);
+      border-color: rgba(255,255,255,.08);
       box-shadow:
-        inset 0 1px 0 rgba(255,255,255,.06),
-        0 1px 2px rgba(0,0,0,.3);
+        inset 0 1px 0 rgba(255,255,255,.04),
+        0 1px 2px rgba(0,0,0,.2);
     }
     .cta svg { width: 13px; height: 13px; }
 
@@ -986,7 +984,7 @@
         <!-- Section header -->
         <div class="section-head">
           <div class="section-title">
-            <span class="title-main">Collection Groups</span>
+            <span class="title-main">Groups</span>
             <span class="title-meta" id="groupCountLabel">0 groups</span>
           </div>
           <div class="section-stat">
